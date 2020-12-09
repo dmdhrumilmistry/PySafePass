@@ -1,4 +1,5 @@
 # SafePass
+<img src = "images/screenshots/v1.0/0.Main.PNG">
 SafePass helps to create Random Passwords with different combinations of special characters, alphabets and numbers.
 
 For running the SafePass on the system, make sure you have jvm or jdk installed.
@@ -7,14 +8,14 @@ One can download the builds from the build folder and run using command prompt o
  
 For proper operation, User is preferred to compile the source files on their system.
 
-Steps to compile the program:
+# Steps to compile the program:
 1. Download or clone the repository on the system.
 2. Open terminal or cmd in src folder.
 3. Use "javac Main.java" to compile the program.
 4. Use "java Main" to run the program.
 
 
-How to Use:
+# How to Use:
 1. Open Command Prompt, PowerShell or Terminal.
 <img src = "images/screenshots/v1.0/1. cmd prompt.png">
 2. Compile the Program if not compiled before, using "javac Main.java".
@@ -27,4 +28,7 @@ How to Use:
 <img src = "images/screenshots/v1.0/5. Choose Valid Option.PNG">
 6. Password will be generated.
 <img src = "images/screenshots/v1.0/6. Copy Generated Password.PNG">
-7. Copy and Use.
+7. Copy and Use the password
+
+# Currently Working to create a Password Manager for SafePass
+The future updates will include the Password Manager.
