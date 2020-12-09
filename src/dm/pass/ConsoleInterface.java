@@ -48,19 +48,19 @@ public final class ConsoleInterface {
 	
 	static void getSafePassBanner() {
 		
-		printBorder(80, '=');
+		printBorder(120, '=');
 		
 		printPassSafe();
 		
 		System.out.println();
 		
-		printBorder(80, '-');
+		printBorder(120, '-');
 		
 		System.out.println("Safe Pass --|Generate Random Passwords|--");
 		System.out.println("Written By Dhrumil Mistry");
 		System.out.println("github: https://github.com/dmdhrumilmistry/");
 		
-		printBorder(80, '=');
+		printBorder(120, '=');
 	}
 	
 	static void printPassSafe() {
