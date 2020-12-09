@@ -13,9 +13,18 @@ Steps to compile the program:
 3. Use "javac Main.java" to compile the program.
 4. Use "java Main" to run the program.
 
+
 How to Use:
-1. Run the program using "java Main" command.
-2. Enter the length of the password you would like to create.
-3. A menu will appear. Choose option of your choice. Enter the valid option number (1, 2, ...).
-4. Password will be generated.
-5. Copy and Use.
+1. Open Command Prompt, PowerShell or Terminal.
+<img src = "images/screenshots/v1.0/1. cmd prompt.png">
+2. Compile the Program if not compiled before, using "javac Main.java".
+<img src = "images/screenshots/v1.0/2. Compiling.PNG">
+3. Run the program using "java Main" command.
+<img src = "images/screenshots/v1.0/3. Running Main class file.PNG">
+4. Enter the length of the password you would like to create.
+<img src = "images/screenshots/v1.0/4. Enter Length of Password.PNG">
+5. A menu will appear. Choose option of your choice. Enter the valid option number (1, 2, ...)
+<img src = "images/screenshots/v1.0/5. Choose Valid Option.PNG">
+6. Password will be generated.
+<img src = "images/screenshots/v1.0/6. Copy Generated Password.PNG">
+7. Copy and Use.
