@@ -1,6 +1,5 @@
 import db
 import user
-import encrypt
 import logger
 import functions
 
@@ -12,5 +11,7 @@ username = 'Test'
 website = 'testee.com'
 password = 'JustTesting'
 test = user.User(username, password, website)
+
+
 
 print(test)
