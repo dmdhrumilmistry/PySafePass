@@ -12,6 +12,7 @@ website = 'testee.com'
 password = 'JustTesting'
 test = user.User(username, password, website)
 
-
+test.encrypt_information()
+test.decrypt_information()
 
 print(test)
