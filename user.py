@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from 
+from encrypt import Encrypter
 
 
 class User:
