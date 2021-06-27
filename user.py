@@ -1,3 +1,3 @@
-from prettytable import PrettyTable
-from encrypt import Encrypter
+# from prettytable import PrettyTable
+# from encrypt import Encrypter
 

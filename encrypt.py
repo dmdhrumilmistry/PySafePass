@@ -1,80 +1,56 @@
-from os.path import isdir, isfile
-from os import listdir
+import base64
 from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
-def read_key()->bytes:
+def gen_key_from_pass(passwd:str)->bytes:
     '''
-    returns the key from the key file as bytes
+    Generates key from password.
     '''
-    with open('keys.txt', 'r+') as key_file:
+    passwd = passwd.encode() 
+    salt = b'salt_'  
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+        backend=default_backend()
+    )
+
+    key = base64.urlsafe_b64encode(kdf.derive(passwd))
+    print(key)
+    return key
+
+def generate_key()->bool:
+    '''
+    Generates Random Key and saves it in key file.
+    '''
+    with open('keys.txt', 'wb') as key_file:
+        KEY = Fernet.generate_key()
+        key_file.write(KEY)
+        return True
+
+
+def get_key()->bytes:
+    '''
+    Extracts key from the key file.
+    '''
+    with open('keys.txt', 'r') as key_file:
         KEY = key_file.read()
-        # print('KEY : ', KEY)
-        key_file.close()
-        return KEY.encode()
-        
+        return KEY
 
 
-def generate_and_dump_key()->bool:
-    '''
-    generates and stores the key in the key file.
-    returns bool value.
-    '''
-    try:
-        key = Fernet.generate_key()
-        # open key file and store generated key
-        with open('keys.txt', 'w+') as key_file:
-            key_file.write(key.decode())
-            return True
-    except Exception as e:
-        print(e)
-        return False
-    
-
-# Check for keys
-if isfile('keys.txt'):
-    print('[*] Keys found')
-    
-    try :
-        KEY = read_key()
-
-    except Exception as e:
-        print('[-] Cannot open keys.txt')
-
-    finally :
-        try:
-            encrypter = Fernet(KEY)
-
-        except ValueError:
-            print('[-] Invalid Key Found.')
-            print('[*] Generating new keys...')
-
-            if generate_and_dump_key():
-                print('[*] Key generated successfully.')
-                KEY = read_key()
-                encrypter = Fernet(KEY)
-
-            else:
-                print('[-] Cannot Generate Keys, Exiting..')
-                exit()\
-
-        finally:
-            # test = encrypter.encrypt('Hello HOLA HI HOWDY!!!!'.encode())
-            # print(test)
-            # print(encrypter.decrypt(test))
-            def encrypt_string(data:str)->str:
-                '''
-                takes string parameter data and returns encrypted data as string.
-                '''
-                return encrypter.encrypt(data.encode()).decode()
+def encrypt_data(KEY:bytes, data:str)->bytes:
+    data = data.encode('utf-8')
+    encrypter = Fernet(KEY)
+    enc_data = encrypter.encrypt(data)
+    return enc_data
 
 
-            def decrypt_string(data:str)->str:
-                '''
-                takes string parameter data and returns decrypted data as string.
-                '''
-                return encrypter.decrypt(data.encode()).decode()
-
-else :
-    print('[-] Keys not found, Exiting...')
-    exit()
+def decrypt_data(KEY:bytes, data:str)->bytes:
+    data = data.encode('utf-8')
+    decrypter = Fernet(KEY)
+    dec_data = decrypter.decrypt(data)
+    return dec_data
