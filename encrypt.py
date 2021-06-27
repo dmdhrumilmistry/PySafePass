@@ -1,45 +1,56 @@
-# TODO:
-# 1. Create a class or functions to encrypt the database data
-
+import base64
 from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
-class Encrypter:
-    
-    def __init__(self):
-        # generate and store key
+def gen_key_from_pass(passwd:str)->bytes:
+    '''
+    Generates key from password.
+    '''
+    passwd = passwd.encode() 
+    salt = b'salt_'  
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+        backend=default_backend()
+    )
+
+    key = base64.urlsafe_b64encode(kdf.derive(passwd))
+    print(key)
+    return key
+
+def generate_key()->bool:
+    '''
+    Generates Random Key and saves it in key file.
+    '''
+    with open('keys.txt', 'wb') as key_file:
         KEY = Fernet.generate_key()
-        with open('keys.txt', 'r+') as key_file:
-            key_file.write(KEY.decode())
-
-        self.encrypter = Fernet(KEY)
-        # print('[*] Key Generated successfully') #for logs
+        key_file.write(KEY)
+        return True
 
 
-    def encrypt_data(self,data:str)->str:
-        '''
-        Encrypts data with help of secret key
-        '''
-        return self.encrypter.encrypt(data.encode()).decode()
+def get_key()->bytes:
+    '''
+    Extracts key from the key file.
+    '''
+    with open('keys.txt', 'r') as key_file:
+        KEY = key_file.read()
+        return KEY
 
 
-    def decrypt_data(self, data:str)->str:
-        '''
-        Decrypts data with help of secret key
-        '''
-        return self.encrypter.decrypt(data.encode()).decode()
+def encrypt_data(KEY:bytes, data:str)->bytes:
+    data = data.encode('utf-8')
+    encrypter = Fernet(KEY)
+    enc_data = encrypter.encrypt(data)
+    return enc_data
 
 
-    def __get_key(self)->bytes:
-        with open('keys.txt', 'r') as key_file:
-            key = key_file.read()
-            return key.encode()
-
-
-test = Encrypter()
-
-enc = test.encrypt_data('hello')
-print(enc)
-
-dec = test.decrypt_data(enc)
-print(dec)
+def decrypt_data(KEY:bytes, data:str)->bytes:
+    data = data.encode('utf-8')
+    decrypter = Fernet(KEY)
+    dec_data = decrypter.decrypt(data)
+    return dec_data
