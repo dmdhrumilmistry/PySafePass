@@ -87,12 +87,12 @@ class User:
         '''
         Decrypts all the information available in the usernames, websites and passwords list.
         '''
-        try:
-            self.usernames = self.perform_on_list(self.encrypter.decrypt_data, self.usernames)
-            self.websites = self.perform_on_list(self.encrypter.decrypt_data , self.websites)
-            self.passwords = self.perform_on_list(self.encrypter.decrypt_data, self.passwords)
-            return True
-        except Exception as e:
-            print('[-] An exception occured while encrypting user data')
-            print(e)
-            return False 
+        # try:
+        self.usernames = self.perform_on_list(self.encrypter.decrypt_data, self.usernames)
+        self.websites = self.perform_on_list(self.encrypter.decrypt_data , self.websites)
+        self.passwords = self.perform_on_list(self.encrypter.decrypt_data, self.passwords)
+        return True
+        # except Exception as e:
+        #     print('[-] An exception occured while decrypting user data')
+        #     print(e)
+        #     return False 

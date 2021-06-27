@@ -21,8 +21,8 @@ class Encrypter:
         return self.encrypter.decrypt(data.encode()).decode()
 
 
-# test = Encrypter()
-# enc = test.encrypt_data('hello')
-# print(enc)
-# dec = test.decrypt_data(enc)
-# print(dec)
+test = Encrypter()
+enc = test.encrypt_data('hello')
+print(enc)
+dec = test.decrypt_data(enc)
+print(dec)
