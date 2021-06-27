@@ -20,7 +20,7 @@ def gen_key_from_pass(passwd:str)->bytes:
     )
 
     key = base64.urlsafe_b64encode(kdf.derive(passwd))
-    print(key)
+    # print(key)
     return key
 
 
