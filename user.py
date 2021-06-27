@@ -40,21 +40,21 @@ class User:
         
         print(user_data)
 
-        print('\n[+] Encrypted Data')
-        user_data = PrettyTable()
-        user_data.add_column('Usernames', self.enc_usernames)
-        user_data.add_column('Passwords', self.enc_passwords)
-        user_data.add_column('Websites', self.enc_websites)
+        # print('\n[+] Encrypted Data')
+        # user_data = PrettyTable()
+        # user_data.add_column('Usernames', self.enc_usernames)
+        # user_data.add_column('Passwords', self.enc_passwords)
+        # user_data.add_column('Websites', self.enc_websites)
         
-        print(user_data)
+        # print(user_data)
 
-        print('\n[+] Decrypted Data')
-        user_data = PrettyTable()
-        user_data.add_column('Usernames', self.usernames)
-        user_data.add_column('Passwords', self.passwords)
-        user_data.add_column('Websites', self.websites)
+        # print('\n[+] Decrypted Data')
+        # user_data = PrettyTable()
+        # user_data.add_column('Usernames', self.usernames)
+        # user_data.add_column('Passwords', self.passwords)
+        # user_data.add_column('Websites', self.websites)
         
-        print(user_data)
+        # print(user_data)
         return ''
 
 

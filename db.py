@@ -10,6 +10,7 @@ key_con = sqlite3.connect('D:\GithubRepos\SafePass\keys.db')
 key_cur = key_con.cursor()
 try:
     # create keys table
+    # Note for logs 'Generating Keys database'
     key_cur.execute('CREATE TABLE keys(id integer PRIMARY KEY, name text, key text)')
 except Exception as e:
     print('[*] Table keys already exits.')
