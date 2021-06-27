@@ -9,8 +9,10 @@ class Encrypter:
     
     def __init__(self):
         self.KEY = Fernet.generate_key()
+        with open('keys.txt', '') as f:
+            pass
         self.encrypter = Fernet(self.KEY)
-        # print('[*] Key Generated successfully') for logs
+        print('[*] Key Generated successfully') #for logs
 
 
     def encrypt_data(self,data:str)->str:

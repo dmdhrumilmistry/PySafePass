@@ -12,10 +12,12 @@ class User:
     enc_passwords = []
 
 
-    def __init__(self, username='', password='', website=''):
+    def __init__(self, username='', passwords='', website='', name='', password=''):
         if username:
+            self.name = name
+            self.password = password
             self.usernames.append(username)
-            self.passwords.append(password)
+            self.passwords.append(passwords)
             self.websites.append(website)
             self.encrypter = Encrypter()
 
@@ -38,21 +40,21 @@ class User:
         
         print(user_data)
 
-        # print('\n[+] Encrypted Data')
-        # user_data = PrettyTable()
-        # user_data.add_column('Usernames', self.enc_usernames)
-        # user_data.add_column('Passwords', self.enc_passwords)
-        # user_data.add_column('Websites', self.enc_websites)
+        print('\n[+] Encrypted Data')
+        user_data = PrettyTable()
+        user_data.add_column('Usernames', self.enc_usernames)
+        user_data.add_column('Passwords', self.enc_passwords)
+        user_data.add_column('Websites', self.enc_websites)
         
-        # print(user_data)
+        print(user_data)
 
-        # print('\n[+] Decrypted Data')
-        # user_data = PrettyTable()
-        # user_data.add_column('Usernames', self.usernames)
-        # user_data.add_column('Passwords', self.passwords)
-        # user_data.add_column('Websites', self.websites)
+        print('\n[+] Decrypted Data')
+        user_data = PrettyTable()
+        user_data.add_column('Usernames', self.usernames)
+        user_data.add_column('Passwords', self.passwords)
+        user_data.add_column('Websites', self.websites)
         
-        # print(user_data)
+        print(user_data)
         return ''
 
 
