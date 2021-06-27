@@ -55,6 +55,7 @@ if isfile('keys.txt'):
             # test = encrypter.encrypt('Hello HOLA HI HOWDY!!!!'.encode())
             # print(test)
             # print(encrypter.decrypt(test))
+            pass
 else :
     print('[-] Keys not found, Exiting...')
     exit()
