@@ -16,7 +16,7 @@ if test.encrypt_information():
     print('[*] User data encrypted successfully')
 
 
-# if test.decrypt_information():
-#     print('[*] User data decrypted successfully')
+if test.decrypt_information():
+    print('[*] User data decrypted successfully')
 
 print(test)

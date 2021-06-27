@@ -1,45 +1,60 @@
-# TODO:
-# 1. Create a class or functions to encrypt the database data
-
+from os.path import isdir, isfile
+from os import listdir
 from cryptography.fernet import Fernet
 
+def read_key()->bytes:
+    with open('keys.txt', 'r+') as key_file:
+        KEY = key_file.read()
+        # print('KEY : ', KEY)
+        key_file.close()
+        return KEY.encode()
+        
 
-class Encrypter:
+
+def generate_and_dump_key()->bool:
+    try:
+        key = Fernet.generate_key()
+        # open key file and store generated key
+        with open('keys.txt', 'w+') as key_file:
+            key_file.write(key.decode())
+            return True
+    except Exception as e:
+        print(e)
+        return False
     
-    def __init__(self):
-        # generate and store key
-        KEY = Fernet.generate_key()
-        with open('keys.txt', 'r+') as key_file:
-            key_file.write(KEY.decode())
+# key : VvK8WPJzbP1YE_huDfQeC5xrstrXhdXqRqssWqWau3A=
 
-        self.encrypter = Fernet(KEY)
-        # print('[*] Key Generated successfully') #for logs
+# Check for keys
+if isfile('keys.txt'):
+    print('[*] Keys found')
+    
+    try :
+        KEY = read_key()
 
+    except Exception as e:
+        print('[-] Cannot open keys.txt')
 
-    def encrypt_data(self,data:str)->str:
-        '''
-        Encrypts data with help of secret key
-        '''
-        return self.encrypter.encrypt(data.encode()).decode()
+    finally :
+        try:
+            encrypter = Fernet(KEY)
 
+        except ValueError:
+            print('[-] Invalid Key Found.')
+            print('[*] Generating new keys...')
 
-    def decrypt_data(self, data:str)->str:
-        '''
-        Decrypts data with help of secret key
-        '''
-        return self.encrypter.decrypt(data.encode()).decode()
+            if generate_and_dump_key():
+                print('[*] Key generated successfully.')
+                KEY = read_key()
+                encrypter = Fernet(KEY)
 
+            else:
+                print('[-] Cannot Generate Keys, Exiting..')
+                exit()\
 
-    def __get_key(self)->bytes:
-        with open('keys.txt', 'r') as key_file:
-            key = key_file.read()
-            return key.encode()
-
-
-test = Encrypter()
-
-enc = test.encrypt_data('hello')
-print(enc)
-
-dec = test.decrypt_data(enc)
-print(dec)
+        finally:
+            # test = encrypter.encrypt('Hello HOLA HI HOWDY!!!!'.encode())
+            # print(test)
+            # print(encrypter.decrypt(test))
+else :
+    print('[-] Keys not found, Exiting...')
+    exit()
