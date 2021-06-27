@@ -2,7 +2,11 @@ from os.path import isdir, isfile
 from os import listdir
 from cryptography.fernet import Fernet
 
+
 def read_key()->bytes:
+    '''
+    returns the key from the key file as bytes
+    '''
     with open('keys.txt', 'r+') as key_file:
         KEY = key_file.read()
         # print('KEY : ', KEY)
@@ -12,6 +16,10 @@ def read_key()->bytes:
 
 
 def generate_and_dump_key()->bool:
+    '''
+    generates and stores the key in the key file.
+    returns bool value.
+    '''
     try:
         key = Fernet.generate_key()
         # open key file and store generated key
@@ -22,7 +30,6 @@ def generate_and_dump_key()->bool:
         print(e)
         return False
     
-# key : VvK8WPJzbP1YE_huDfQeC5xrstrXhdXqRqssWqWau3A=
 
 # Check for keys
 if isfile('keys.txt'):
@@ -55,7 +62,19 @@ if isfile('keys.txt'):
             # test = encrypter.encrypt('Hello HOLA HI HOWDY!!!!'.encode())
             # print(test)
             # print(encrypter.decrypt(test))
-            pass
+            def encrypt_string(data:str)->str:
+                '''
+                takes string parameter data and returns encrypted data as string.
+                '''
+                return encrypter.encrypt(data.encode()).decode()
+
+
+            def decrypt_string(data:str)->str:
+                '''
+                takes string parameter data and returns decrypted data as string.
+                '''
+                return encrypter.decrypt(data.encode()).decode()
+
 else :
     print('[-] Keys not found, Exiting...')
     exit()
