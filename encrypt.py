@@ -25,7 +25,7 @@ def gen_key_from_pass(passwd:str)->bytes:
 
 def generate_key()->bool:
     '''
-    Generates Random Key and saves it in key file.
+    Generates random key and saves it in key file.
     '''
     with open('keys.txt', 'wb') as key_file:
         KEY = Fernet.generate_key()
@@ -43,6 +43,11 @@ def get_key()->bytes:
 
 
 def encrypt_data(KEY:bytes, data:str)->bytes:
+    '''
+    encrypts data which is passed with the help of key as
+    another parameter and returns encrypted data in form 
+    of bytes
+    '''
     data = data.encode('utf-8')
     encrypter = Fernet(KEY)
     enc_data = encrypter.encrypt(data)
@@ -50,6 +55,11 @@ def encrypt_data(KEY:bytes, data:str)->bytes:
 
 
 def decrypt_data(KEY:bytes, data:str)->bytes:
+    '''
+    decrypts data which is passed with the help of key as
+    another parameter and returns decrypted data in form 
+    of bytes
+    '''
     data = data.encode('utf-8')
     decrypter = Fernet(KEY)
     dec_data = decrypter.decrypt(data)
