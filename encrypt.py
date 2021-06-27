@@ -23,6 +23,7 @@ def gen_key_from_pass(passwd:str)->bytes:
     print(key)
     return key
 
+
 def generate_key()->bool:
     '''
     Generates random key and saves it in key file.

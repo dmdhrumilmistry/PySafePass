@@ -5,13 +5,15 @@ import sqlite3
 from os.path import isfile 
 
 # Connect keys.db
-key_con = sqlite3.connect('D:\GithubRepos\SafePass\keys.db')
+key_con = sqlite3.connect('keys.db')
+pass_check_con = sqlite3.connect('passwords.db')
 # Create cursor obj
 key_cur = key_con.cursor()
 try:
     # create keys table
     # Note for logs 'Generating Keys database'
     key_cur.execute('CREATE TABLE keys(id integer PRIMARY KEY, name text, key text)')
+
 except Exception as e:
     print('[*] Table keys already exits.')
 finally:
@@ -21,3 +23,5 @@ finally:
     # save and exit
     key_con.commit()
     key_con.close()
+
+# pass_check_con.execute('CREATE TABLE passwords (id integer PRIMARY KEY, passwords text)')
