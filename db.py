@@ -3,7 +3,6 @@
 # 2. Generate db to save keys
 import sqlite3
 from os.path import isfile 
-from random import randint # import for test
 
 
 def add_user(usrname:str, password_hash:str)->bool:

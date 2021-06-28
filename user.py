@@ -1,5 +1,6 @@
 # from prettytable import PrettyTable
 import encrypt
+import db
 from getpass import getpass
 from pprint import pprint
 import hash
@@ -31,6 +32,10 @@ class User:
                 pass_flag = True
                 self.__password = __passwd1
                 print('[*] Password Matched.')
+                print('[*] Calculating password hash')
+                pass_hash = hash.hashdata(self.__password)
+                print('[*] Adding password hash to db')
+                db.add_user(usrname=self.usrname, password_hash=pass_hash)
                 break
             else: 
                 print('[-] Passwords do not match. Please try again.')                
@@ -99,10 +104,10 @@ class User:
 
     def __get_usr_pass_hash(self)->str:
         '''
-        returns stored user password hash 
+        returns stored user password hash from saved password hash database.
         '''
-        # TODO: read user saved password hash from passwords.db
-        return '81dc9bdb52d04dc20036dbd8313ed055' # enter 1234
+        # TODO: read user saved password hash from passwords.db (partially completed)
+        return db.get_pass_hash(self.usrname)
 
 
     def ___authenticate_user(self)->bool:
