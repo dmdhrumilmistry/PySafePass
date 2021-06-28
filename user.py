@@ -1,12 +1,18 @@
 # from prettytable import PrettyTable
-from inspect import indentsize
-from sqlite3.dbapi2 import SQLITE_DELETE
 import encrypt
 from getpass import getpass
 from pprint import pprint
-
+import hash
 
 class User:
+    '''
+    class User generates a user, stores data with the help of encryption.
+    '''
+
+    # TODO: 
+    # 1. Dump password hash to passwords.db (passwords.db contains password hashes)
+    # 2. Dump username and password to database.
+
     def __init__(self)->None:
         print('[*] Generating new user...')
 
@@ -44,9 +50,7 @@ class User:
             print('[-] Cannot create user. Please try again.')
 
 
-    # TODO: 
-    # 1. Dump password hash to passwords.db (passwords.db contains password hashes)
-    # 2. Dump username and password to database.
+    
 
 
     def add_info(self, username, password, website)->bool:
@@ -96,6 +100,34 @@ class User:
             return False
 
 
+    def __get_usr_pass_hash(self)->str:
+        '''
+        returns stored user password hash 
+        '''
+        # TODO: read user saved password hash from passwords.db
+        return '81dc9bdb52d04dc20036dbd8313ed055' # enter 1234
+
+
+    def ___authenticate_user(self)->bool:
+        '''
+        Autenticates user before viewing their passwords.
+        '''
+        for attempt in range(3):
+            entered_pass = getpass(f'[+] {self.usrname} enter your password : ')
+            pass_hash = hash.hashdata(entered_pass)
+
+            usr_pass_hash = self.__get_usr_pass_hash()
+
+            if pass_hash == usr_pass_hash:
+                print(f'[*] {self.usrname} Authenticated.')
+                return True                
+            else :
+                print(f'[!] {self.usrname} entered incorrect password, try again.')
+
+        print(f'[!] {self.usrname}unsuccessfull attempts!')
+        return False
+
+
     def decrypt_info(self)->bool:
             '''
             decrypts all the data (information) in the user dict. 
@@ -104,31 +136,37 @@ class User:
             if self.data['encrypted']:
 
                 # TODO : Prompt user for password and if password is valid then continue.
-                # 1. Prompt and take user input.
+                # 1. Prompt and take user input. (done)
                 # 2. Check with saved password hashes in the password.db 
-                # 3. Authenticate user
+                # 3. Authenticate user (done)
                 
-                KEY = encrypt.gen_key_from_pass(self.__password)
-                length = len(self.data['usernames'])
+                if self.___authenticate_user():
 
-                # decrypt data into a new list
-                usernames = [ encrypt.decrypt_data( KEY, self.data['usernames'][pos] ).decode('utf-8') for pos in range(length) ]
-                passwords = [ encrypt.decrypt_data( KEY, self.data['passwords'][pos] ).decode('utf-8') for pos in range(length) ]
-                websites = [ encrypt.decrypt_data( KEY, self.data['websites'][pos] ).decode('utf-8') for pos in range(length) ]
-                
-                # update data values
-                self.data['usernames'] = usernames
-                self.data['passwords'] = passwords
-                self.data['websites'] = websites
-                self.data['encrypted'] = False
+                    KEY = encrypt.gen_key_from_pass(self.__password)
+                    length = len(self.data['usernames'])
 
-                print('[*] Decrypted Data successfully')
-                pprint(self.data)
-                return True
+                    # decrypt data into a new list
+                    usernames = [ encrypt.decrypt_data( KEY, self.data['usernames'][pos] ).decode('utf-8') for pos in range(length) ]
+                    passwords = [ encrypt.decrypt_data( KEY, self.data['passwords'][pos] ).decode('utf-8') for pos in range(length) ]
+                    websites = [ encrypt.decrypt_data( KEY, self.data['websites'][pos] ).decode('utf-8') for pos in range(length) ]
+                    
+                    # update data values
+                    self.data['usernames'] = usernames
+                    self.data['passwords'] = passwords
+                    self.data['websites'] = websites
+                    self.data['encrypted'] = False
+
+                    print('[*] Decrypted Data successfully')
+                    pprint(self.data)
+                    return True
+
+                else :
+                    print(f'[!] Decrypting process interrupted due to wrong password.')
 
             else : 
                 print('[*] Data is already decrypted.')
                 return False
+
 
 # Below code is for Test 
 test_usr = User()
