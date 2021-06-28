@@ -130,7 +130,7 @@ class User:
         return False
 
 
-    def decrypt_info(self)->bool:
+    def __decrypt_info(self)->bool:
             '''
             decrypts all the data (information) in the user dict. 
             '''
@@ -170,9 +170,15 @@ class User:
                 return False
 
 
+    def save_password(self)->bool:
+        pass
+
+    def get_password(self)->bool:
+        pass
+    
 # Below code is for Test 
-test_usr = User()
-test_usr.add_info(username='HEllo', password='hola', website='namaste.com')
-print(test_usr.data)
-test_usr.encrypt_info()
-test_usr.decrypt_info()
+# test_usr = User()
+# test_usr.add_info(username='HEllo', password='hola', website='namaste.com')
+# print(test_usr.data)
+# test_usr.encrypt_info()
+# test_usr.decrypt_info()

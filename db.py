@@ -1,6 +1,5 @@
 # TODO :
-# 1. Create a simple database to store username, website and password
-# 2. Generate db to save keys
+# 1. Create a database to store username, website and password
 import sqlite3
 from os.path import isfile 
 

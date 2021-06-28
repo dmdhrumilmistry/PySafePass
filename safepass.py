@@ -1,25 +1,22 @@
-import db
-import user
 import functions
-from encrypt import encrypt_data, decrypt_data, gen_key_from_pass
 
 #-------------------- MAIN --------------------
 functions.start()
 
-KEY = gen_key_from_pass('HELLO')
+# KEY = gen_key_from_pass('HELLO')
 
-username = 'Test'
-website = 'testee.com'
-password = 'JustTesting'
+# username = 'Test'
+# website = 'testee.com'
+# password = 'JustTesting'
 
-enc_username = encrypt_data(KEY, username)
-enc_website  = encrypt_data(KEY, website)
-enc_password = encrypt_data(KEY, password)
+# enc_username = encrypt_data(KEY, username)
+# enc_website  = encrypt_data(KEY, website)
+# enc_password = encrypt_data(KEY, password)
 
-print(f'{enc_username} {enc_website} {enc_password} ')
+# print(f'{enc_username} {enc_website} {enc_password} ')
 
-username = decrypt_data(KEY, enc_username.decode()) 
-website  = decrypt_data(KEY, enc_website.decode())
-password = decrypt_data(KEY, enc_password.decode())
+# username = decrypt_data(KEY, enc_username.decode()) 
+# website  = decrypt_data(KEY, enc_website.decode())
+# password = decrypt_data(KEY, enc_password.decode())
 
-print(f'{username} {website} {password} ')
+# print(f'{username} {website} {password} ')
