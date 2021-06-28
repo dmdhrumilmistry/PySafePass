@@ -50,9 +50,6 @@ class User:
             print('[-] Cannot create user. Please try again.')
 
 
-    
-
-
     def add_info(self, username, password, website)->bool:
         '''
         add user entered information to the lists.
