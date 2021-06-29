@@ -1,10 +1,8 @@
-# from prettytable import PrettyTable
 from datetime import date
 from itertools import count
 import encrypt
 import db
 from getpass import getpass
-from pprint import pprint
 import hash
 from prettytable import PrettyTable
 
@@ -187,13 +185,14 @@ class User:
 
         if not self.data['encrypted']:
             # print table if data is not encrypted 
-            # table = PrettyTable
-            # max_count = len(self.data['usernames'])
-            # # table.add_column('SR. NO.', [ count+1 for count in range(max_count)] )
-            # table.add_column(fieldname='USERNAMES', column=self.data['usernames'])
-            # table.add_column(fieldname='WEBSITES', column=self.data['websites'])
-            # table.add_column(fieldname='PASSWORDS', column=self.data['passwords'])
-            pprint(self.data)
+            table = PrettyTable()
+            max_count = len(self.data['usernames'])
+            table.add_column('SR. NO.', [ count+1 for count in range(max_count)] )
+            table.add_column('USERNAMES', self.data['usernames'])
+            table.add_column('WEBSITES', self.data['websites'])
+            table.add_column('PASSWORDS', self.data['passwords'])
+            print(table)
+            # pprint(self.data)
 
         else :
             print('[!] Data is encrypted.')
@@ -206,6 +205,16 @@ class User:
 # print(test_usr.data)
 # test_usr.encrypt_info()
 # test_usr.decrypt_info()
+
+# test for print_data
+# user = User(new_usr=False, usrname='test')
+# user.data = {
+#     'encrypted': False,
+#     'passwords': ['testyou','just'],
+#     'usernames': ['testme','testing'],
+#     'websites': ['tester.com','yourcode']
+#     }
+# user.print_data()
 
 # known issues :
 # 1. if we try to create new user with same/different passwords. there will be no changes in the db.

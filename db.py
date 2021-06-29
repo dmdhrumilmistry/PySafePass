@@ -1,10 +1,12 @@
 # TODO :
 # 1. Create a database to store username, website and password
+
 import sqlite3
-# from user import User
-from os.path import isfile 
+# from pprint import pprint
+
 
 PASSWORD_DB = 'passwords.db'
+USER_DB = 'users.db'
 
 
 def add_user(usrname:str, password_hash:str)->bool:
@@ -33,6 +35,7 @@ def get_pass_hash(usrname:str)->str:
     try:
         pass_con = sqlite3.connect(PASSWORD_DB)
         pass_cur = pass_con.cursor()
+
         # fetch password hash for usrname from password_hashes table
         pass_cur.execute('SELECT KEY FROM password_hashes WHERE NAME=?', (usrname,))
         passwd_hash = pass_cur.fetchone()
@@ -70,11 +73,100 @@ def get_saved_users():
     return users
 
 
-def dump_user_data(user):
+def dump_user_data(data:dict, name:str)->bool:
+    '''
+    dumps user data to the database.
+    takes encrypted data(dict) and name(str) 
+    '''
     print('[*] Starting to dump user data into database.')
+    # extracting information from the data dictionary if data is encrypted:
+    if data['encrypted']:
+        usernames = data['usernames']
+        websites = data['websites']
+        passwords = data['passwords']
+        max_count = len(usernames)
+        
+        # print for debug
+        # print('usernames: ', usernames)
+        # print('websites: ', websites)
+        # print('passwords: ', passwords)
+
+        # creating user.db
+        user_con = sqlite3.connect(USER_DB)
+        user_cur = user_con.cursor()
+        user_cur.execute(f'CREATE TABLE IF NOT EXISTS {name} (USERNAMES TEXT, WEBSITES TEXT, PASSWORDS TEXT)')
+
+        # insert values to users database
+        for pos in range(max_count):
+            user_con.execute(f'INSERT INTO {name}(USERNAMES, WEBSITES, PASSWORDS) VALUES(?,?,?)', (usernames[pos], websites[pos], passwords[pos], ) )
+
+        user_con.commit()
+        user_con.close()
+        print(f'[*] {name} data successfully dumped to user database.')
+        return True
+        
+    else:
+        print('[!] Encrypt data before saving.')
+        return False
+
+
+def get_dumped_user_data(name:str)->dict:
+    '''
+    get dumped user data from users database. 
+    takes encrypted name(str
+    ).
+    '''
+    # connect to db and create cursor
+    user_con = sqlite3.connect(USER_DB)
+    user_cur = user_con.cursor()
     
-    
+    # extracting information from the users database.
+    user_cur.execute(f'SELECT * FROM {name}')
+
+    # raw data = [(username, website, password), ....]
+    raw_data = user_cur.fetchall()
+
+    if raw_data:
+        max_count = len(raw_data)
+
+        # create empty list to save encrypted data
+        data = {
+        'encrypted': True,
+        'passwords': [],
+        'usernames': [],
+        'websites': []
+        }
+
+        # append raw data to data
+        for pos in range(max_count):
+            data['usernames'].append(raw_data[pos][0])
+            data['websites'].append(raw_data[pos][1])
+            data['passwords'].append(raw_data[pos][2])
+
+        user_con.close()
+
+        return data
+    else :
+        # returning empty string if no data is available
+        print(f'[!] No saved data available for {name}')
+        print('[*] Save passwords before fetching them.')
+        return dict()
+
+
 # Test case
 # print(add_user('test', '81dc9bdb52d04dc20036dbd8313ed055'))
 # print(get_pass_hash('test'))
 # print(get_saved_users())
+
+# Test case for dumping data to users database.
+# data = {
+#     'encrypted': True,
+#     'passwords': ['testyou', 'google'],
+#     'usernames': ['testme', 'duckduckgo'],
+#     'websites': ['tester.com', 'bing']
+#     }
+
+# dump_user_data(data, name='test')
+
+# Test case for extracting data from users database
+# pprint(get_dumped_user_data('test'))
