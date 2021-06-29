@@ -105,3 +105,17 @@ SafePass was previously written in JAVA as random password generator, SafePass i
   $ python3 safepass.py
   ```
  
+ 
+ ## SafePass Terminal Commands 
+ 
+ | Commands | Usage |
+ |:--------:|:-----|
+ | login |authenticate user to login into their accounts |
+ |newuser|create a new user|
+ |savepass|encrypts and saves user information to the database|
+ |getpass|retrieves user information from the database and decrypts it|
+ |show|prints user information (usernames, websites and passwords)|
+ |help|prints help menu|
+ |clear|clears text on the screen|
+ |exit|exit safepass|
+ 
