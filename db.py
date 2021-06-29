@@ -94,6 +94,7 @@ def dump_user_data(data:dict, name:str)->bool:
         # creating user.db
         user_con = sqlite3.connect(USER_DB)
         user_cur = user_con.cursor()
+        user_cur.execute(f'DROP TABLE IF EXISTS {name}')
         user_cur.execute(f'CREATE TABLE IF NOT EXISTS {name} (USERNAMES TEXT, WEBSITES TEXT, PASSWORDS TEXT)')
 
         # insert values to users database
