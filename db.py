@@ -3,13 +3,15 @@
 import sqlite3
 from os.path import isfile 
 
+PASSWORD_DB = 'passwords.db'
+
 
 def add_user(usrname:str, password_hash:str)->bool:
     '''
     adds username and its password hash to the password db.
     '''
     try:
-        pass_con = sqlite3.connect('passwords.db')
+        pass_con = sqlite3.connect(PASSWORD_DB)
         pass_cur = pass_con.cursor()
         pass_cur.execute('CREATE TABLE IF NOT EXISTS password_hashes (NAME TEXT, KEY TEXT)')
         pass_cur.execute("INSERT INTO password_hashes VALUES (?,?)",(usrname, password_hash))
@@ -28,7 +30,7 @@ def get_pass_hash(usrname:str)->str:
     and returns passwd_hash as string
     '''
     try:
-        pass_con = sqlite3.connect('passwords.db')
+        pass_con = sqlite3.connect(PASSWORD_DB)
         pass_cur = pass_con.cursor()
         # fetch password hash for usrname from password_hashes table
         pass_cur.execute('SELECT KEY FROM password_hashes WHERE NAME=?', (usrname,))
@@ -48,6 +50,26 @@ def get_pass_hash(usrname:str)->str:
         return False
 
 
+def get_saved_users():
+    '''
+    returns list of user names stored in password database.
+    '''
+    pass_con = sqlite3.connect(PASSWORD_DB)
+    pass_cur = pass_con.cursor()
+    pass_cur.execute('SELECT NAME FROM password_hashes')
+    usernames = pass_cur.fetchall()
+    # print('usernames : ', usernames)
+    
+    # extract user names
+    users = []
+    pos = 0
+    for username in usernames:
+        users.append(usernames[pos][0])
+        pos += 1
+    return users
+
+    
 # Test case
 # print(add_user('test', '81dc9bdb52d04dc20036dbd8313ed055'))
 # print(get_pass_hash('test'))
+# print(get_saved_users())

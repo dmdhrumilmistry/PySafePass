@@ -3,6 +3,7 @@ import string
 import random
 import os
 from user import User
+import db
 from subprocess import call 
 
 
@@ -32,12 +33,49 @@ def __generate_pass(pass_len:int)->str:
         return passwd
 
 
-def __save_user_pass()->bool:
-    pass
+def __save_user_pass(user:User)->bool:
+    '''
+    saves user password and other information to the database.
+    This function is written for functions.py 
+    '''
+    # TODO:
+    # 1. Ask for username. (done)
+    # 2. Authenticate user. (optional for single user) (implemented)
+    # 3. get information which is to be saved. (done)
+    # 4. add and encrypt info. (done)
+    # 5. save info to database. (remaining)
 
 
-def __get_user_pass():
-    pass
+    username = input('[+] username : ')
+    password = input('[+] password : ')
+    website = input('[+] website : ')
+
+    user.add_info(username, password, website)
+    user.encrypt_info()
+
+
+def __get_user_pass(user:User):
+    '''
+    saves user password and other information to the database.
+    This function is written for functions.py 
+    '''
+    # TODO:
+    # 1. Ask for username. (done)
+    # 2. Authenticate user. (optional for single user) (implemented)
+    # 3. get information which is to be saved. (done)
+    # 4. add and encrypt info. (done)
+    # 5. save info to database. (remaining)
+
+    username = input('[+] username : ')
+    website = input('[+] website : ')
+    user.decrypt_info()
+
+
+def __show(user:User):
+    '''
+    prints data stored by the user.
+    '''
+    user.print_data()
 
 
 def __clrscr():
@@ -49,22 +87,41 @@ def __clrscr():
     call(clear, shell=True) 
 
 
-def __get_choice():
+def __login()->User:
+    '''
+    helps user to login.
+    '''
+    usernames = db.get_saved_users() 
+    usrname = input('[+] Enter your name : ')
+
+    if usrname in usernames:
+        return User(new_usr=False, usrname=usrname)
+        
+
+def __new_user()->User:
+    '''
+    Creates new user.
+    '''
+    usrname = input('[+] Enter your name: ')
+    return User(new_usr=True,usrname=usrname)
+
+
+def __get_command(user:User):
     '''
     prints menu and asks user for their choice of operation.
     '''
-    choice = input('SafePass > ')
-
-    if choice=='1':
-        user = User()
+    choice = input('SafePass > ').lower()
     
-    elif choice=='2':
-        __save_user_pass()
+    if choice=='newuser':
+        __new_user()
     
-    elif choice=='3':
-        __get_user_pass()
+    elif choice=='savepass':
+        __save_user_pass(user)
     
-    elif choice=='4':
+    elif choice=='getpass':
+        __get_user_pass(user)
+    
+    elif choice=='genpass':
         try :
             pass_len = int(input('[+] Enter password length : '))
             print('generated password :', __generate_pass(pass_len))
@@ -73,18 +130,24 @@ def __get_choice():
         except Exception as e:
             print('[-] Exception : ', e)
     
-    elif choice.lower() == 'help':
+    elif choice == 'show':
+        __show(user)
+
+    elif choice == 'help':
         __print_commands()
 
-    elif choice.lower() == 'clear':
+    elif choice == 'clear':
         __clrscr()
 
-    elif choice.lower() == 'exit':
+    elif choice == 'exit':
         print('[*] Exiting SafePass.')
         exit()
+    
+    elif choice == 'show':
+        __show(user)
 
     else :
-        print('[!] INVALID OPERATION ')
+        print('[!] INVALID COMMAND ')
         print(strings.INVALID_CHOICE)
 
 
@@ -99,15 +162,21 @@ def start() -> bool:
     __print_commands()
 
     try:
+        login_choice = input(strings.LOGIN_PROMPT).lower()
+        if login_choice == '1':
+            user = __login()
+        else:
+            user = __new_user()
+
         wanna_continue = True
         while wanna_continue:
-            __get_choice()
+            __get_command(user)
 
     except KeyboardInterrupt:
         print('\n[!] Ctrl+C detected!')
         wanna_continue = False
 
     except Exception as e:
-        print('\n[-] Exception : ', e)
+        print('\n[-] Exception : ', e.with_traceback())
 
     return True

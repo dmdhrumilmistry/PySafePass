@@ -10,7 +10,7 @@ def gen_key_from_pass(passwd:str)->bytes:
     Generates key from password.
     '''
     passwd = passwd.encode() 
-    salt = b'salt_'  
+    salt = b'_50M3s3c43tK3Y!'  
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
