@@ -68,7 +68,7 @@ SafePass was previously written in JAVA as random password generator, SafePass i
 
 - Install python3 and git
   ```
-  $ sudo apt update -y && sudo apt upgrade -y && sudo apt install python3 python3-pip git -y
+  $ sudo apt update -y && sudo apt upgrade -y && sudo apt install python3 python3-pip git build-essential libssl libffi rust -y
   ```
   
 - Check if python3 and git are installed properly
@@ -76,6 +76,41 @@ SafePass was previously written in JAVA as random password generator, SafePass i
   $ python --version && git --version
   Python 3.9.5
   git version 2.20.1
+  ```
+  
+- Clone the SafePass repository
+  ```
+  $ git clone https://github.com/dmdhrumilmistry/safepass
+  ```
+
+- Change directory to safepass
+  ```
+  $ cd safepass
+  ```
+  
+- Install requirements
+  ```
+  $ pip3 install -r requirements.txt
+  ```
+ 
+- Run SafePass
+  ```
+  $ python3 safepass.py
+  ```
+ 
+ 
+ ### On Android (Using Termux)
+ 
+- Install python3 and git
+  ```
+   $ pkg update -y && pkg upgrade -y && pkg install python git build-essential libffi rust -y
+  ```
+  
+- Check if python3 and git are installed properly
+  ```
+  $ python --version && git --version
+  Python 3.9.5
+  git version 2.32.0
   ```
   
 - Clone the SafePass repository
