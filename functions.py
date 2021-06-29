@@ -39,12 +39,13 @@ def __save_user_pass(user:User)->bool:
     This function is written for functions.py 
     '''
     # TODO:
+    # 0. Decrypt data before saving.
     # 1. Ask for username. (done)
     # 2. Authenticate user. (optional for single user) (implemented)
     # 3. get information which is to be saved. (done)
     # 4. add and encrypt info. (done)
     # 5. save info to database. (remaining)
-
+    user.decrypt_info()
 
     username = input('[+] username : ')
     password = input('[+] password : ')
@@ -130,8 +131,8 @@ def __get_command(user:User):
         except Exception as e:
             print('[-] Exception : ', e)
     
-    elif choice == 'show':
-        __show(user)
+    elif choice == 'login':
+        __login()
 
     elif choice == 'help':
         __print_commands()
@@ -148,7 +149,7 @@ def __get_command(user:User):
 
     else :
         print('[!] INVALID COMMAND ')
-        print(strings.INVALID_CHOICE)
+        print(strings.INVALID_COMMAND)
 
 
 def start() -> bool:
@@ -162,11 +163,17 @@ def start() -> bool:
     __print_commands()
 
     try:
-        login_choice = input(strings.LOGIN_PROMPT).lower()
-        if login_choice == '1':
-            user = __login()
-        else:
-            user = __new_user()
+        login_not_successfull = True
+        while login_not_successfull:
+            login_choice = input(strings.LOGIN_PROMPT).lower()
+            if login_choice == '1':
+                user = __login()
+                login_not_successfull = False
+            elif login_choice == '2':
+                user = __new_user()
+                login_not_successfull = False
+            else :
+                print('[-] User not logged in, please try again or create new user.')
 
         wanna_continue = True
         while wanna_continue:

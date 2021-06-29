@@ -1,6 +1,7 @@
 # TODO :
 # 1. Create a database to store username, website and password
 import sqlite3
+# from user import User
 from os.path import isfile 
 
 PASSWORD_DB = 'passwords.db'
@@ -68,6 +69,10 @@ def get_saved_users():
         pos += 1
     return users
 
+
+def dump_user_data(user):
+    print('[*] Starting to dump user data into database.')
+    
     
 # Test case
 # print(add_user('test', '81dc9bdb52d04dc20036dbd8313ed055'))
