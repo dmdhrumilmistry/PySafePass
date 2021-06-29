@@ -53,6 +53,10 @@ def __save_user_pass(user:User)->bool:
 
     user.add_info(username, password, website)
     user.encrypt_info()
+    if db.dump_user_data(data=user.data, name=user.usrname):
+        print('[*] User data has been dumped.')
+    else:
+        print('[!] User data has not been dumped yet! Received False')
 
 
 def __get_user_pass(user:User):
@@ -67,9 +71,12 @@ def __get_user_pass(user:User):
     # 4. add and encrypt info. (done)
     # 5. save info to database. (remaining)
 
-    username = input('[+] username : ')
-    website = input('[+] website : ')
-    user.decrypt_info()
+    data = db.get_dumped_user_data(user.usrname)
+    if data:
+        user.data = data
+        user.decrypt_info()
+    else:
+        print(f'[!] Save some passwords for the user {user.usrname}')
 
 
 def __show(user:User):
