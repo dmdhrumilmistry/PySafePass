@@ -5,6 +5,7 @@ import os
 from user import User
 import db
 from subprocess import call 
+from pyperclip import copy
 
 
 def __print_banner():
@@ -30,6 +31,8 @@ def __generate_pass(pass_len:int)->str:
 
     for i in range(pass_len):
         passwd = ''.join(random.choice(chars) for i in range(pass_len))
+        print('[*] Copying generated password to clipboard.')
+        copy(passwd)
         return passwd
 
 
@@ -38,13 +41,6 @@ def __save_user_pass(user:User)->bool:
     saves user password and other information to the database.
     This function is written for functions.py 
     '''
-    # TODO:
-    # 0. Decrypt data before saving.
-    # 1. Ask for username. (done)
-    # 2. Authenticate user. (optional for single user) (implemented)
-    # 3. get information which is to be saved. (done)
-    # 4. add and encrypt info. (done)
-    # 5. save info to database. (remaining)
     user.decrypt_info()
 
     username = input('[+] username : ')
@@ -64,13 +60,6 @@ def __get_user_pass(user:User):
     saves user password and other information to the database.
     This function is written for functions.py 
     '''
-    # TODO:
-    # 1. Ask for username. (done)
-    # 2. Authenticate user. (optional for single user) (implemented)
-    # 3. get information which is to be saved. (done)
-    # 4. add and encrypt info. (done)
-    # 5. save info to database. (remaining)
-
     data = db.get_dumped_user_data(user.usrname)
     if data:
         user.data = data

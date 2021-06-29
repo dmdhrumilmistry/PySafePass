@@ -1,5 +1,3 @@
-from datetime import date
-from itertools import count
 import encrypt
 import db
 from getpass import getpass
@@ -12,9 +10,6 @@ class User:
     class User generates a user, stores data with the help of encryption.
     '''
 
-    # TODO: 
-    # 1. Dump password hash to passwords.db (passwords.db contains password hashes)
-    # 2. Dump username and password to database.
 
     def __init__(self, new_usr:bool, usrname:str)->None:
         '''
@@ -106,7 +101,6 @@ class User:
             self.data['encrypted'] = True
 
             print('[*] Encrypted Data successfully')
-            # pprint(self.data)
             return True
 
         else : 
@@ -118,7 +112,6 @@ class User:
         '''
         returns stored user password hash from saved password hash database.
         '''
-        # TODO: read user saved password hash from passwords.db (partially completed)
         return db.get_pass_hash(self.usrname)
 
 
@@ -151,11 +144,6 @@ class User:
             '''
             # check if data is encrypted
             if self.data['encrypted']:
-
-                # TODO : Prompt user for password and if password is valid then continue.
-                # 1. Prompt and take user input. (done)
-                # 2. Check with saved password hashes in the password.db 
-                # 3. Authenticate user (done)
                 
                 KEY = encrypt.gen_key_from_pass(self.__password)
                 length = len(self.data['usernames'])
@@ -172,7 +160,6 @@ class User:
                 self.data['encrypted'] = False
 
                 print('[*] Decrypted Data successfully')
-                # pprint(self.data)
                 return True
 
             else : 
@@ -192,30 +179,6 @@ class User:
             table.add_column('WEBSITES', self.data['websites'])
             table.add_column('PASSWORDS', self.data['passwords'])
             print(table)
-            # pprint(self.data)
 
         else :
             print('[!] Data is encrypted.')
-
-        
-
-# Below code is for Test 
-# test_usr = User()
-# test_usr.add_info(username='HEllo', password='hola', website='namaste.com')
-# print(test_usr.data)
-# test_usr.encrypt_info()
-# test_usr.decrypt_info()
-
-# test for print_data
-# user = User(new_usr=False, usrname='test')
-# user.data = {
-#     'encrypted': False,
-#     'passwords': ['testyou','just'],
-#     'usernames': ['testme','testing'],
-#     'websites': ['tester.com','yourcode']
-#     }
-# user.print_data()
-
-# known issues :
-# 1. if we try to create new user with same/different passwords. there will be no changes in the db.
-# 2. Ask user for salt and update in encrypt.py

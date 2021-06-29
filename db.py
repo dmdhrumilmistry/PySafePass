@@ -1,8 +1,4 @@
-# TODO :
-# 1. Create a database to store username, website and password
-
 import sqlite3
-# from pprint import pprint
 
 
 PASSWORD_DB = 'passwords.db'
@@ -23,7 +19,7 @@ def add_user(usrname:str, password_hash:str)->bool:
         print(f'[*] Successfully added password hash to db of user {usrname}')
         return True
     except Exception as e:
-        print(e) 
+        print('[-] Exception : ', e.with_traceback()) 
         return False
 
 
@@ -48,10 +44,10 @@ def get_pass_hash(usrname:str)->str:
             # return empty string if acc not found
             print('[!] No Account Found.')
             return ''
-
+    except sqlite3.OperationalError as e:
+        print('[-] Trying to fetch without creating user.')
     except Exception as e:
-        print(e) 
-        return False
+        print('[-] Exception : ', e.with_traceback()) 
 
 
 def get_saved_users():
@@ -62,14 +58,12 @@ def get_saved_users():
     pass_cur = pass_con.cursor()
     pass_cur.execute('SELECT NAME FROM password_hashes')
     usernames = pass_cur.fetchall()
-    # print('usernames : ', usernames)
     
     # extract user names
     users = []
-    pos = 0
     for username in usernames:
-        users.append(usernames[pos][0])
-        pos += 1
+        users.append(username[0])
+
     return users
 
 
@@ -85,11 +79,6 @@ def dump_user_data(data:dict, name:str)->bool:
         websites = data['websites']
         passwords = data['passwords']
         max_count = len(usernames)
-        
-        # print for debug
-        # print('usernames: ', usernames)
-        # print('websites: ', websites)
-        # print('passwords: ', passwords)
 
         # creating user.db
         user_con = sqlite3.connect(USER_DB)
@@ -152,22 +141,3 @@ def get_dumped_user_data(name:str)->dict:
         print(f'[!] No saved data available for {name}')
         print('[*] Save passwords before fetching them.')
         return dict()
-
-
-# Test case
-# print(add_user('test', '81dc9bdb52d04dc20036dbd8313ed055'))
-# print(get_pass_hash('test'))
-# print(get_saved_users())
-
-# Test case for dumping data to users database.
-# data = {
-#     'encrypted': True,
-#     'passwords': ['testyou', 'google'],
-#     'usernames': ['testme', 'duckduckgo'],
-#     'websites': ['tester.com', 'bing']
-#     }
-
-# dump_user_data(data, name='test')
-
-# Test case for extracting data from users database
-# pprint(get_dumped_user_data('test'))
