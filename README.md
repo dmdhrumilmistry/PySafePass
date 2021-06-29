@@ -26,12 +26,17 @@ SafePass was previously written in JAVA as random password generator, SafePass i
 
 
 ## Dependencies
-
+`SafePass` requires following programs/libraries/modules to run properly:
+  - `Python`
+    - `prettytable`
+    - `cryptography`
 
 ## Installation
 
 ### For Windows
+
 - Install [Python3](https://www.python.org/) and [git](https://git-scm.com/) on your Windows.
+
 - Check if python and git are installed and added to the path. Open Powershell or Command Prompt.
   - Python
   ```
@@ -49,17 +54,54 @@ SafePass was previously written in JAVA as random password generator, SafePass i
   ```
   PS C:\Users\User> git clone https://github.com/dmdhrumilmistry/safepass
   ```
+  
 - Change directory to safepass
   ```
   PS C:\Users\User> cd safepass
   ```
+  
 - Install requirements
   ```
   PS C:\Users\User\safepass> pip install -r requirements.txt
   ```
+  
 - Run the safepass python file to start SafePass
   ```
   PS C:\Users\User\safepass> python safepass.py
   ```
 
-<!-- ### For Debian based distros -->
+
+### For Debian based distros
+
+- Install python3 and git
+  ```
+  $ sudo apt update -y && sudo apt upgrade -y && sudo apt install python3 python3-pip git -y
+  ```
+  
+- Check if python3 and git are installed properly
+  ```
+  $ python --version && git --version
+  Python 3.9.5
+  git version 2.20.1
+  ```
+  
+- Clone the SafePass repository
+  ```
+  $ git clone https://github.com/dmdhrumilmistry/safepass
+  ```
+
+- Change directory to safepass
+  ```
+  $ cd safepass
+  ```
+  
+- Install requirements
+  ```
+  $ pip3 install -r requirements.txt
+  ```
+ 
+- Run SafePass
+  ```
+  $ python3 safepass.py
+  ```
+ 
