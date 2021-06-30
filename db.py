@@ -1,6 +1,7 @@
 from logging import log
 import sqlite3
 import logger
+import sys
 
 PASSWORD_DB = 'passwords.db'
 USER_DB = 'users.db'
@@ -57,17 +58,25 @@ def get_saved_users():
     '''
     returns list of user names stored in password database.
     '''
-    pass_con = sqlite3.connect(PASSWORD_DB)
-    pass_cur = pass_con.cursor()
-    pass_cur.execute('SELECT NAME FROM password_hashes')
-    usernames = pass_cur.fetchall()
-    
-    # extract user names
-    users = []
-    for username in usernames:
-        users.append(username[0])
+    try:
+        pass_con = sqlite3.connect(PASSWORD_DB)
+        pass_cur = pass_con.cursor()
+        pass_cur.execute('SELECT NAME FROM password_hashes')
+        usernames = pass_cur.fetchall()
+        
+        # extract user names
+        users = []
+        for username in usernames:
+            users.append(username[0])
 
-    return users
+        return users
+    except Exception as e:
+        print('[!] Try creating user before logging in.')
+        print(f'[-] Exception in get_save_users: {e}')
+        logger.error(f'[-] Exception in get_save_users: {e}. Exiting program')
+        print('[-] Closing SafePass')
+        sys.exit()
+
 
 
 def dump_user_data(data:dict, name:str)->bool:

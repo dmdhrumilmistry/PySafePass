@@ -170,7 +170,9 @@ def start() -> bool:
                 user = __new_user()
                 login_not_successfull = False
             else :
-                logger.info('[-] User not logged in, please try again or create new user.')
+                logger.info('[-] User not logged in')
+                print('[-] User not logged in, please try again or create new user.')
+
 
         wanna_continue = True
         while wanna_continue:
@@ -178,9 +180,10 @@ def start() -> bool:
 
     except KeyboardInterrupt:
         logger.warning('\n[!] Ctrl+C detected!')
+        print('\n[!] Ctrl+C detected!')
         wanna_continue = False
 
     except Exception as e:
-        logger.info('\n[-] Exception : ', e.with_traceback())
+        logger.info('\n[-] Exception : ' + str(e))
 
     return True
