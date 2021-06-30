@@ -2,6 +2,7 @@ import strings
 import string 
 import random
 import os
+import logger
 from user import User
 import db
 from subprocess import call 
@@ -31,7 +32,7 @@ def __generate_pass(pass_len:int)->str:
 
     for i in range(pass_len):
         passwd = ''.join(random.choice(chars) for i in range(pass_len))
-        print('[*] Copying generated password to clipboard.')
+        logger.info('[*] Copying generated password to clipboard.')
         copy(passwd)
         return passwd
 
@@ -50,9 +51,9 @@ def __save_user_pass(user:User)->bool:
     user.add_info(username, password, website)
     user.encrypt_info()
     if db.dump_user_data(data=user.data, name=user.usrname):
-        print('[*] User data has been dumped.')
+        logger.info('[*] User data has been dumped.')
     else:
-        print('[!] User data has not been dumped yet! Received False')
+        logger.warning('[!] User data has not been dumped yet! Received False')
 
 
 def __get_user_pass(user:User):
@@ -65,7 +66,7 @@ def __get_user_pass(user:User):
         user.data = data
         user.decrypt_info()
     else:
-        print(f'[!] Save some passwords for the user {user.usrname}')
+        logger.warning('[!] Save some passwords for the user {user.usrname}')
 
 
 def __show(user:User):
@@ -123,9 +124,9 @@ def __get_command(user:User):
             pass_len = int(input('[+] Enter password length : '))
             print('generated password :', __generate_pass(pass_len))
         except ValueError:
-            print('[-] Enter valid length')
+            logger.error('[-] Enter valid length')
         except Exception as e:
-            print('[-] Exception : ', e)
+            logger.error('[-] Exception : ', e)
     
     elif choice == 'login':
         __login()
@@ -137,14 +138,14 @@ def __get_command(user:User):
         __clrscr()
 
     elif choice == 'exit':
-        print('[*] Exiting SafePass.')
+        logger.info('[*] Exiting SafePass.')
         exit()
     
     elif choice == 'show':
         __show(user)
 
     else :
-        print('[!] INVALID COMMAND ')
+        logger.warning('[!] INVALID COMMAND ')
         print(strings.INVALID_COMMAND)
 
 
@@ -169,17 +170,17 @@ def start() -> bool:
                 user = __new_user()
                 login_not_successfull = False
             else :
-                print('[-] User not logged in, please try again or create new user.')
+                logger.info('[-] User not logged in, please try again or create new user.')
 
         wanna_continue = True
         while wanna_continue:
             __get_command(user)
 
     except KeyboardInterrupt:
-        print('\n[!] Ctrl+C detected!')
+        logger.warning('\n[!] Ctrl+C detected!')
         wanna_continue = False
 
     except Exception as e:
-        print('\n[-] Exception : ', e.with_traceback())
+        logger.info('\n[-] Exception : ', e.with_traceback())
 
     return True

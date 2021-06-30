@@ -1,3 +1,5 @@
+from logging import log
+import logger
 import encrypt
 import db
 from getpass import getpass
@@ -50,10 +52,10 @@ class User:
                     print('[-] Passwords do not match. Please try again.')                
 
             if usr_flag and pass_flag :
-                print('[*] User created with username {}'.format(self.usrname))
+                logger.info('[*] User created with username {}'.format(self.usrname))
 
             else:
-                print('[-] Cannot create user. Please try again.')
+                logger.error('[-] Cannot create user. Please try again.')
 
         else :
             # retrieving user password since user exists
@@ -73,10 +75,10 @@ class User:
             self.data['usernames'].append(username)
             self.data['passwords'].append(password)
             self.data['websites'].append(website)
-            print('[*] Information added to list successfully.')
+            logger.info('[*] Information added to list successfully.')
             return True
         else:
-            print('[-] Please enter valid information. All parameters should be non empty.')
+            logger.error('[-] Please enter valid information. All parameters should be non empty.')
             return False
             
 
@@ -100,11 +102,11 @@ class User:
             self.data['websites'] = websites
             self.data['encrypted'] = True
 
-            print('[*] Encrypted Data successfully')
+            logger.info('[*] Encrypted Data successfully')
             return True
 
         else : 
-            print('[*] Data is already encrypted.')
+            logger.info('[*] Data is already encrypted.')
             return False
 
 
@@ -129,12 +131,14 @@ class User:
 
             if pass_hash == usr_pass_hash and usr_pass_hash != '':
                 passwd = entered_pass
-                print(f'[*] {self.usrname} Authenticated.')
+                logger.info(f'[*] {self.usrname} Authenticated.')
                 return (True, passwd)            
             else :
-                print(f'[!] {self.usrname} entered incorrect password, try again.')
+                logger.warning(f'[!] {self.usrname} entered incorrect password, try again.')
 
+        logger.warning(f'[!] {self.usrname} unsuccessfull attempts!')
         print(f'[!] {self.usrname} unsuccessfull attempts!')
+
         return (False, passwd)
 
 
@@ -159,16 +163,16 @@ class User:
                 self.data['websites'] = websites
                 self.data['encrypted'] = False
 
-                print('[*] Decrypted Data successfully')
+                logger.info('[*] Decrypted Data successfully')
                 return True
 
             else : 
-                print('[*] Data is already decrypted.')
+                logger.info('[*] Data is already decrypted.')
                 return False
 
 
     def print_data(self)->None:
-        print(f'[!] Printing data for {self.usrname}.')
+        logger.info(f'[*] Printing data for {self.usrname}.')
 
         if not self.data['encrypted']:
             # print table if data is not encrypted 
@@ -181,4 +185,6 @@ class User:
             print(table)
 
         else :
-            print('[!] Data is encrypted.')
+            print('[!] Data is encrypted. Decrypt Data before viewing.')
+            logger.warning('[!] Data is encrypted. An Attempt to view encrypted data')
+
