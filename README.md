@@ -147,3 +147,10 @@ SafePass was previously written in JAVA as random password generator, SafePass i
  |clear|clears text on the screen|
  |exit|exit safepass|
  
+## Have Any Issues or Idea 💡
+
+- Create an issue
+- Fork this repo, add new feature and create Pull Request. 
+
+
+## Star⭐ SafePass repository
