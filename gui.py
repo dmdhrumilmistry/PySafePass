@@ -2,8 +2,7 @@ from sys import exit, argv
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QWidget
 from PyQt5.uic import loadUi
-from PyQt5 import QtGui
-
+from user import User
 
 class Login(QDialog):
     def __init__(self):
@@ -17,13 +16,14 @@ class Login(QDialog):
     def login_user(self):
         username = self.username_input.text()
         password = self.password_input.text()
-        if username == 'usr' and password == 'pass':
+        user = User(new_usr=False, usrname=username, passwd=password)
+        if user.authenticate_user():
             print('authenticated!')
             passwords_table = PasswordsTable()
             widget.addWidget(passwords_table)
             widget.setCurrentIndex(widget.currentIndex()+1)
         else:
-            print('Failure!!')
+            print('Failure!! from gui')
             self.username_input.setText('')
             self.password_input.setText('')
 
@@ -84,4 +84,7 @@ widget.setFixedHeight(620)
 widget.setFixedWidth(480)
 widget.show()
 
-exit(SafePassApp.exec_())
+
+def start_safepass_app():
+    global SafePassApp
+    exit(SafePassApp.exec_())

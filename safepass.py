@@ -1,3 +1,3 @@
-import functions
+from gui import start_safepass_app
 
-functions.start()
+start_safepass_app()

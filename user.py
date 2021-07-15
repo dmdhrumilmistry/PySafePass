@@ -13,11 +13,14 @@ class User:
     '''
 
 
-    def __init__(self, new_usr:bool, usrname:str)->None:
+    def __init__(self, new_usr:bool, usrname:str, passwd:str)->None:
         '''
         create User
         takes new_user (bool) as parameter 
         '''
+        self.usrname = usrname
+        self.__password = passwd
+
         # create dictionary with lists to store information
         self.data = {
                 'usernames': [],
@@ -26,42 +29,13 @@ class User:
                 'encrypted' : False 
         }
 
-        usr_flag = False
-        if type(usrname) is str and usrname!='' :
-            self.usrname = usrname
-            usr_flag = True
-
         if new_usr:
             print('[*] Generating new user...')
-
-            pass_flag = False
-            for attempt in range(3):
-                __passwd1 = getpass('[+] Choose your password :')
-                __passwd2 = getpass('[+] Verify your password : ')
-
-                if __passwd1 == __passwd2:
-                    pass_flag = True
-                    self.__password = __passwd1
-                    print('[*] Password Matched.')
-                    print('[*] Calculating password hash')
-                    pass_hash = hash.hashdata(self.__password)
-                    print('[*] Adding password hash to db')
-                    db.add_user(usrname=self.usrname, password_hash=pass_hash)
-                    break
-                else: 
-                    print('[-] Passwords do not match. Please try again.')                
-
-            if usr_flag and pass_flag :
-                logger.info('[*] User created with username {}'.format(self.usrname))
-
-            else:
-                logger.error('[-] Cannot create user. Please try again.')
-
-        else :
-            # retrieving user password since user exists
-            auth_result = self.___authenticate_user()
-            if auth_result[0]:
-                self.__password = auth_result[1]
+            print('[*] Calculating password hash')
+            pass_hash = hash.hashdata(self.__password)
+            print('[*] Adding password hash to db')
+            db.add_user(usrname=self.usrname, password_hash=pass_hash)           
+            logger.info('[*] User created with username {}'.format(self.usrname))
 
 
     def add_info(self, username, password, website)->bool:
@@ -117,32 +91,25 @@ class User:
         return db.get_pass_hash(self.usrname)
 
 
-    def ___authenticate_user(self)->tuple():
+    def authenticate_user(self)->bool:
         '''
         Autenticates user before viewing their passwords.
-        returns (result, password)
+        returns: bool
         '''
-        passwd = ''
-        for attempt in range(3):
-            entered_pass = getpass(f'[+] {self.usrname} enter your password : ')
-            pass_hash = hash.hashdata(entered_pass)
+        entered_pass = self.__password
+        pass_hash = hash.hashdata(entered_pass)
 
-            usr_pass_hash = self.__get_usr_pass_hash()
+        usr_pass_hash = self.__get_usr_pass_hash()
 
-            if pass_hash == usr_pass_hash and usr_pass_hash != '':
-                passwd = entered_pass
-                logger.info(f'[*] {self.usrname} Authenticated.')
-                return (True, passwd)            
-            else :
-                logger.warning(f'[!] {self.usrname} entered incorrect password, try again.')
+        if pass_hash == usr_pass_hash and usr_pass_hash != '':
+            logger.info(f'[*] {self.usrname} Authenticated.')
+            return True           
 
-        logger.warning(f'[!] {self.usrname} unsuccessfull attempts!')
-        print(f'[!] {self.usrname} unsuccessfull attempts!')
-
-        return (False, passwd)
+        print(f'[!] {self.usrname} unsuccessfull login attempt!')
+        return False
 
 
-    def decrypt_info(self)->bool:
+    def __decrypt_info(self)->bool:
             '''
             decrypts all the data (information) in the user dict. 
             '''

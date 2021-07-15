@@ -149,7 +149,7 @@ def __get_command(user:User):
         print(strings.INVALID_COMMAND)
 
 
-def start() -> bool:
+def start_console() -> bool:
     '''
     should run at the start of the program.
     prints banner and menu
