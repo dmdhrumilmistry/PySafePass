@@ -2,6 +2,7 @@ from sys import exit, argv
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QWidget
 from PyQt5.uic import loadUi
+from PyQt5 import QtGui
 
 
 class Login(QDialog):
@@ -69,11 +70,13 @@ class PasswordsTable(QDialog):
             self.pass_table.setItem(row, 0, QtWidgets.QTableWidgetItem(data['username']))
             self.pass_table.setItem(row, 1, QtWidgets.QTableWidgetItem(data['website']))
             self.pass_table.setItem(row, 2, QtWidgets.QTableWidgetItem(data['password']))
-
             row += 1
+        
+        self.pass_table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+
 
 SafePassApp = QApplication(argv)
-SafePassLoginWindow = PasswordsTable()
+SafePassLoginWindow = Login()
 widget = QStackedWidget()
 widget.setWindowTitle('SafePass')
 widget.addWidget(SafePassLoginWindow)

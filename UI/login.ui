@@ -14,8 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(54, 54, 54);
-background-color: qlineargradient(spread:pad, x1:0.244318, y1:0.301, x2:0.255591, y2:0.938, stop:0.857955 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+   <string notr="true">background-color: rgb(255, 255, 239);</string>
   </property>
   <widget class="QLabel" name="safepass_head">
    <property name="geometry">
@@ -30,7 +29,7 @@ background-color: qlineargradient(spread:pad, x1:0.244318, y1:0.301, x2:0.255591
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(255,255,255);
+    <string notr="true">color:rgb(0, 0, 0);
 font: 30pt &quot;Lucida Console&quot;;</string>
    </property>
    <property name="text">
@@ -47,7 +46,7 @@ font: 30pt &quot;Lucida Console&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
+    <string notr="true">color:rgb(0, 0, 0);
 font: 18pt &quot;Lucida Console&quot;;</string>
    </property>
    <property name="text">
@@ -64,7 +63,7 @@ font: 18pt &quot;Lucida Console&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
+    <string notr="true">color:rgb(0, 0, 0);
 font: 20pt &quot;Lucida Console&quot;;</string>
    </property>
    <property name="text">
@@ -81,7 +80,8 @@ font: 20pt &quot;Lucida Console&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);font-size:12pt</string>
+    <string notr="true">color:rgb(0, 0, 0);
+font-size:12pt</string>
    </property>
    <property name="text">
     <string>An Open Source Password Manager</string>
@@ -125,7 +125,7 @@ font: 16pt &quot;Lucida Console&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
+    <string notr="true">color:rgb(0, 0, 0);
 font: 18pt &quot;Lucida Console&quot;;</string>
    </property>
    <property name="text">
