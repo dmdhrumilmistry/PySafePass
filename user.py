@@ -34,7 +34,8 @@ class User:
             print('[*] Calculating password hash')
             pass_hash = hash.hashdata(self.__password)
             print('[*] Adding password hash to db')
-            db.add_user(usrname=self.usrname, password_hash=pass_hash)           
+            db.add_user(usrname=self.usrname, password_hash=pass_hash)   
+            print('[*] User created with username {}'.format(self.usrname))        
             logger.info('[*] User created with username {}'.format(self.usrname))
 
 
@@ -109,7 +110,7 @@ class User:
         return False
 
 
-    def __decrypt_info(self)->bool:
+    def decrypt_info(self)->bool:
             '''
             decrypts all the data (information) in the user dict. 
             '''
@@ -136,22 +137,4 @@ class User:
             else : 
                 logger.info('[*] Data is already decrypted.')
                 return False
-
-
-    def print_data(self)->None:
-        logger.info(f'[*] Printing data for {self.usrname}.')
-
-        if not self.data['encrypted']:
-            # print table if data is not encrypted 
-            table = PrettyTable()
-            max_count = len(self.data['usernames'])
-            table.add_column('SR. NO.', [ count+1 for count in range(max_count)] )
-            table.add_column('USERNAMES', self.data['usernames'])
-            table.add_column('WEBSITES', self.data['websites'])
-            table.add_column('PASSWORDS', self.data['passwords'])
-            print(table)
-
-        else :
-            print('[!] Data is encrypted. Decrypt Data before viewing.')
-            logger.warning('[!] Data is encrypted. An Attempt to view encrypted data')
 

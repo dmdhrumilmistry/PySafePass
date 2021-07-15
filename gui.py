@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QW
 from PyQt5.uic import loadUi
 from user import User
 
+user = 'AUTH_ME'
+
 class Login(QDialog):
     def __init__(self):
         super(Login, self).__init__()
@@ -14,11 +16,12 @@ class Login(QDialog):
 
     
     def login_user(self):
+        global user
         username = self.username_input.text()
         password = self.password_input.text()
         user = User(new_usr=False, usrname=username, passwd=password)
         if user.authenticate_user():
-            print('authenticated!')
+            print('{} authenticated!'.format(username))
             passwords_table = PasswordsTable()
             widget.addWidget(passwords_table)
             widget.setCurrentIndex(widget.currentIndex()+1)
@@ -45,11 +48,15 @@ class CreateAcc(QDialog):
     
     def create_new_acc(self):
         if self.conpassword_input.text() == self.password_input.text() and len(self.username_input.text())>0:
+            global user
             username = self.username_input.text()
             password = self.password_input.text()
+            user = User(new_usr=True, usrname=username, passwd=password)
             print(username)
             print(password)
-            widget.setCurrentIndex(widget.currentIndex()-1)
+            login_page = Login()
+            widget.addWidget(login_page)
+            widget.setCurrentIndex(widget.currentIndex()+1)
 
 
 class PasswordsTable(QDialog):
@@ -63,6 +70,7 @@ class PasswordsTable(QDialog):
 
     def get_passwords(self):
         datas = [{"username":"hello", "website":"test123", "password":"testee"},{"username":"hello123", "website":"test123123", "password":"testee123"}]
+        # datas = 
         self.pass_table.setRowCount(len(datas))
         row = 0
         
