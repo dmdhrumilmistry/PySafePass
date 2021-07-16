@@ -30,7 +30,7 @@ class Login(QDialog):
             widget.addWidget(passwords_table)
             widget.setCurrentIndex(widget.currentIndex()+1)
         else:
-            # print('Failure!! from gui')
+            message_box(box_type='warning',title='Login Failed',text='Unsuccessful Login',info_text='Check whether entered username and password are valid!')
             self.username_input.setText('')
             self.password_input.setText('')
 
@@ -56,11 +56,16 @@ class CreateAcc(QDialog):
             username = self.username_input.text()
             password = self.password_input.text()
             user = User(new_usr=True, usrname=username, passwd=password)
-            # print(username)
-            # print(password)
+            message_box(box_type='info', title='New Account Created', text='Account has been created successfully!', info_text='Now you can login and save passwords.')
+
             login_page = Login()
             widget.addWidget(login_page)
             widget.setCurrentIndex(widget.currentIndex()+1)
+        else:
+            message_box(box_type='warning',title='Cannot create new user',text='unable to create new user',info_text='check whether entered passwords are identical or try again with another details')
+            self.conpassword_input.setText('')
+            self.password_input.setText('')
+            self.username_input.setText('')
 
 
 class PasswordsTable(QDialog):
@@ -98,8 +103,7 @@ class PasswordsTable(QDialog):
             
             self.pass_table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         else:
-            # print('[+] Login first or save passwords before fetching information!')
-            pass
+            message_box(box_type='warning',title='Cannot Fetch Passwords',text='unable to retrieve passwords',info_text='Login first or save passwords before fetching information!')
 
 
 class SaveInformation(QDialog):
@@ -135,12 +139,12 @@ class SaveInformation(QDialog):
         if user.add_info(username=username, password=password, website=website):
             # print('[+] Info Saved Successfully')
             message_box(box_type='info', title='Info Saved', text='Information Saved Successfully!', info_text='Press refresh button to view changes.')
-            self.password_input.setText('')
-            self.password_input.setText('')
-            self.password_input.setText('')
         else:
-            # print('[-] Error while saving info.')
-            pass
+            message_box(box_type='warning', title='Warning!!', text='Please enter valid Information.',info_text="Are you sure that you've entered valid information?")
+
+        self.username_input.setText('')
+        self.website_input.setText('')
+        self.password_input.setText('')
         widget.setCurrentIndex(widget.currentIndex()-1)
 
 
