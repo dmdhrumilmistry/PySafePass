@@ -1,6 +1,5 @@
 from sys import exit, argv
 import random, os, string, pyperclip
-import db
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
@@ -77,6 +76,7 @@ class PasswordsTable(QDialog):
         self.pass_table.setColumnWidth(2,152)
         self.get_passwords()
 
+        self.username_label.setText(user.usrname)
         self.save_new_info_button.clicked.connect(self.save_new_info)
         self.refresh_data_button.clicked.connect(self.get_passwords)
 

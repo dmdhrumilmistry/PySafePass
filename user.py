@@ -104,7 +104,7 @@ class User:
             logger.info(f'[*] {self.usrname} Authenticated.')
             return True           
 
-        print(f'[!] {self.usrname} unsuccessfull login attempt!')
+        # print(f'[!] {self.usrname} unsuccessfull login attempt!')
         return False
 
 
