@@ -1,17 +1,13 @@
-from logging import log
 import logger
 import encrypt
 import db
-from getpass import getpass
 import hash
-from prettytable import PrettyTable
 
 
 class User:
     '''
     class User generates a user, stores data with the help of encryption.
     '''
-
 
     def __init__(self, new_usr:bool, usrname:str, passwd:str)->None:
         '''
@@ -30,12 +26,12 @@ class User:
         }
 
         if new_usr:
-            print('[*] Generating new user...')
-            print('[*] Calculating password hash')
+            # print('[*] Generating new user...')
+            # print('[*] Calculating password hash')
             pass_hash = hash.hashdata(self.__password)
-            print('[*] Adding password hash to db')
+            # print('[*] Adding password hash to db')
             db.add_user(usrname=self.usrname, password_hash=pass_hash)   
-            print('[*] User created with username {}'.format(self.usrname))        
+            # print('[*] User created with username {}'.format(self.usrname))        
             logger.info('[*] User created with username {}'.format(self.usrname))
 
 
@@ -44,13 +40,15 @@ class User:
         add user entered information to the lists.
         returns bool.
         '''
-        print('[*] Adding Information to the lists')
+        # print('[*] Adding Information to the lists')
         # if any parameter is empty, print error
         if bool(username) and bool(password) and bool(website):
             self.data['usernames'].append(username)
-            self.data['passwords'].append(password)
             self.data['websites'].append(website)
+            self.data['passwords'].append(password)
+            self.encrypt_info()
             logger.info('[*] Information added to list successfully.')
+            db.dump_user_data(self.data, self.usrname)
             return True
         else:
             logger.error('[-] Please enter valid information. All parameters should be non empty.')
@@ -63,7 +61,7 @@ class User:
         '''
         # check if data is not encrypted
         if not self.data['encrypted']:
-            KEY = encrypt.gen_key_from_pass(self.__password) # this is where error occurred
+            KEY = encrypt.gen_key_from_pass(self.__password)
             length = len(self.data['usernames'])
 
             # encrypt data into a new list
@@ -132,9 +130,21 @@ class User:
                 self.data['encrypted'] = False
 
                 logger.info('[*] Decrypted Data successfully')
-                return True
 
             else : 
                 logger.info('[*] Data is already decrypted.')
-                return False
 
+            return True
+
+    def get_user_pass(self):
+        '''
+        saves user password and other information to the database.
+        This function is written for functions.py 
+        '''
+        data = db.get_dumped_user_data(self.usrname)
+        if data:
+            self.data = data
+            return self.decrypt_info()
+
+        logger.warning(f'[!] Save some passwords for the user {self.usrname}')
+        return False

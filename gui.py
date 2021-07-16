@@ -1,10 +1,14 @@
 from sys import exit, argv
+import random, os, string, pyperclip
+import db
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QWidget
 from PyQt5.uic import loadUi
 from user import User
 
+
 user = 'AUTH_ME'
+
 
 class Login(QDialog):
     def __init__(self):
@@ -21,12 +25,12 @@ class Login(QDialog):
         password = self.password_input.text()
         user = User(new_usr=False, usrname=username, passwd=password)
         if user.authenticate_user():
-            print('{} authenticated!'.format(username))
+            # print('{} authenticated!'.format(username))
             passwords_table = PasswordsTable()
             widget.addWidget(passwords_table)
             widget.setCurrentIndex(widget.currentIndex()+1)
         else:
-            print('Failure!! from gui')
+            # print('Failure!! from gui')
             self.username_input.setText('')
             self.password_input.setText('')
 
@@ -52,8 +56,8 @@ class CreateAcc(QDialog):
             username = self.username_input.text()
             password = self.password_input.text()
             user = User(new_usr=True, usrname=username, passwd=password)
-            print(username)
-            print(password)
+            # print(username)
+            # print(password)
             login_page = Login()
             widget.addWidget(login_page)
             widget.setCurrentIndex(widget.currentIndex()+1)
@@ -68,19 +72,73 @@ class PasswordsTable(QDialog):
         self.pass_table.setColumnWidth(2,152)
         self.get_passwords()
 
+        self.save_new_info_button.clicked.connect(self.save_new_info)
+        self.refresh_data_button.clicked.connect(self.get_passwords)
+
+    def save_new_info(self):
+        save_info_page = SaveInformation()
+        widget.addWidget(save_info_page)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+
     def get_passwords(self):
-        datas = [{"username":"hello", "website":"test123", "password":"testee"},{"username":"hello123", "website":"test123123", "password":"testee123"}]
-        # datas = 
-        self.pass_table.setRowCount(len(datas))
-        row = 0
+        if user != 'AUTH_ME' and user.get_user_pass():
+            data = user.data
+            # print(data)
+
+            rows_count = len(data['usernames'])
+            # print(rows_count)
+            self.pass_table.setRowCount(rows_count)
+            
+            for row in range(rows_count):
+                self.pass_table.setItem(row, 0, QtWidgets.QTableWidgetItem(data['usernames'][row]))
+                self.pass_table.setItem(row, 1, QtWidgets.QTableWidgetItem(data['websites'][row]))
+                self.pass_table.setItem(row, 2, QtWidgets.QTableWidgetItem(data['passwords'][row]))
+                row += 1
+            
+            self.pass_table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        else:
+            # print('[+] Login first or save passwords before fetching information!')
+            pass
+
+
+class SaveInformation(QDialog):
+    def __init__(self):
+        super(SaveInformation, self).__init__()
+        loadUi('UI/SaveInfo.ui',self)
+
+        self.genpass_button.clicked.connect(self.genpass)
+        self.saveinfo_button.clicked.connect(self.saveinfo)
+
+
+    def genpass(self):
+        passwd = self.password_input.text()
+        try:
+            passlen = int(passwd)
+        except:
+            passlen = 12
+
+        # generate random password
+        chars = string.ascii_letters + string.digits + '!@#$%^&*()_+-=/*,./;'
+        random.seed = os.urandom(1024)
+        for i in range(passlen):
+            passwd = ''.join(random.choice(chars) for i in range(passlen))
         
-        for data in datas:
-            self.pass_table.setItem(row, 0, QtWidgets.QTableWidgetItem(data['username']))
-            self.pass_table.setItem(row, 1, QtWidgets.QTableWidgetItem(data['website']))
-            self.pass_table.setItem(row, 2, QtWidgets.QTableWidgetItem(data['password']))
-            row += 1
-        
-        self.pass_table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        pyperclip.copy(passwd)
+        self.password_input.setText(passwd)
+
+
+    def saveinfo(self):
+        username = self.username_input.text()
+        website = self.website_input.text()
+        password = self.password_input.text()
+        if user.add_info(username=username, password=password, website=website):
+            # print('[+] Info Saved Successfully')
+            pass
+        else:
+            # print('[-] Error while saving info.')
+            pass
+        widget.setCurrentIndex(widget.currentIndex()-1)
 
 
 SafePassApp = QApplication(argv)
