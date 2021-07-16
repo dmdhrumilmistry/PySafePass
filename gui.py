@@ -2,7 +2,7 @@ from sys import exit, argv
 import random, os, string, pyperclip
 import db
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QWidget
+from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
 from user import User
 
@@ -134,11 +134,33 @@ class SaveInformation(QDialog):
         password = self.password_input.text()
         if user.add_info(username=username, password=password, website=website):
             # print('[+] Info Saved Successfully')
-            pass
+            message_box(box_type='info', title='Info Saved', text='Information Saved Successfully!', info_text='Press refresh button to view changes.')
+            self.password_input.setText('')
+            self.password_input.setText('')
+            self.password_input.setText('')
         else:
             # print('[-] Error while saving info.')
             pass
         widget.setCurrentIndex(widget.currentIndex()-1)
+
+
+def message_box(box_type='warning',title='Title',text='information box', info_text='more info'):
+    msg = QMessageBox()
+    if box_type == 'warning':
+        box_type = QMessageBox.Warning
+    elif box_type == 'info':
+        box_type = QMessageBox.Information
+    
+    msg.setIcon(box_type)
+    msg.setWindowTitle(title)
+
+    msg.setText(text)
+    msg.setInformativeText(info_text)
+    # msg.setDetailedText("The details are as follows:")
+    msg.setStandardButtons(QMessageBox.Ok)
+    # msg.buttonClicked.connect()
+	
+    msg.exec_()
 
 
 SafePassApp = QApplication(argv)
