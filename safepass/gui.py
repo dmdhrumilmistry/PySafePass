@@ -102,6 +102,8 @@ class PasswordsTable(QDialog):
                 row += 1
             
             self.pass_table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        elif len(user.data['usernames'])==0:
+            message_box(box_type='info',title='Welcome to SafePass!',text='Refresh data after saving information',info_text='Use Save information button to save new information.')
         else:
             message_box(box_type='warning',title='Cannot Fetch Passwords',text='unable to retrieve passwords',info_text='Login first or save passwords before fetching information!')
 
