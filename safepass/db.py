@@ -1,6 +1,5 @@
-from logging import log
 import sqlite3
-import logger
+import safepass.logger as logger
 import sys
 
 PASSWORD_DB = 'passwords.db'
