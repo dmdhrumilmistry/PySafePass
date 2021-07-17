@@ -1,10 +1,7 @@
-from logging import log
 import sqlite3
-import logger
+import safepass.logger as logger 
 import sys
-
-PASSWORD_DB = 'passwords.db'
-USER_DB = 'users.db'
+from safepass.paths import PASSWORD_DB, USER_DB
 
 
 def add_user(usrname:str, password_hash:str)->bool:
@@ -45,10 +42,10 @@ def get_pass_hash(usrname:str)->str:
         else :
             # return empty string if acc not found
             logger.error('[!] No Account Found.')
-            print('[!] No Account Found.')
+            # print('[!] No Account Found.')
             return ''
     except sqlite3.OperationalError as e:
-        print('[!] Trying to fetch without creating user.')
+        # print('[!] Trying to fetch without creating user.')
         logger.warning('[!] Trying to fetch without creating user.')
     except Exception as e:
         logger.error('[-] Exception : ', e) 
@@ -71,10 +68,10 @@ def get_saved_users():
 
         return users
     except Exception as e:
-        print('[!] Try creating user before logging in.')
-        print(f'[-] Exception in get_save_users: {e}')
+        # print('[!] Try creating user before logging in.')
+        # print(f'[-] Exception in get_save_users: {e}')
         logger.error(f'[-] Exception in get_save_users: {e}. Exiting program')
-        print('[-] Closing SafePass')
+        # print('[-] Closing SafePass')
         sys.exit()
 
 
@@ -108,7 +105,7 @@ def dump_user_data(data:dict, name:str)->bool:
         return True
         
     else:
-        print('[!] Encrypt data before saving.')
+        # print('[!] Encrypt data before saving.')
         logger.warning('[!] Encrypt data before saving.')
 
         return False
@@ -120,40 +117,49 @@ def get_dumped_user_data(name:str)->dict:
     takes encrypted name(str
     ).
     '''
-    # connect to db and create cursor
-    user_con = sqlite3.connect(USER_DB)
-    user_cur = user_con.cursor()
-    
-    # extracting information from the users database.
-    user_cur.execute(f'SELECT * FROM {name}')
+    # print('[*] Fetching dumped user data')
+    try:
+        # connect to db and create cursor
+        user_con = sqlite3.connect(USER_DB)
+        user_cur = user_con.cursor()
+        
+        # extracting information from the users database.
+        user_cur.execute(f'SELECT * FROM {name}')
 
-    # raw data = [(username, website, password), ....]
-    raw_data = user_cur.fetchall()
+        # raw data = [(username, website, password), ....]
+        raw_data = user_cur.fetchall()
 
-    if raw_data:
-        max_count = len(raw_data)
+        if raw_data:
+            max_count = len(raw_data)
 
-        # create empty list to save encrypted data
-        data = {
-        'encrypted': True,
-        'passwords': [],
-        'usernames': [],
-        'websites': []
-        }
+            # create empty list to save encrypted data
+            data = {
+            'encrypted': True,
+            'passwords': [],
+            'usernames': [],
+            'websites': []
+            }
 
-        # append raw data to data
-        for pos in range(max_count):
-            data['usernames'].append(raw_data[pos][0])
-            data['websites'].append(raw_data[pos][1])
-            data['passwords'].append(raw_data[pos][2])
+            # append raw data to data
+            for pos in range(max_count):
+                data['usernames'].append(raw_data[pos][0])
+                data['websites'].append(raw_data[pos][1])
+                data['passwords'].append(raw_data[pos][2])
 
-        user_con.close()
+            user_con.close()
 
-        return data
-    else :
-        # returning empty string if no data is available
-        print(f'[!] No saved data available for {name}')
-        print('[*] Save passwords before fetching them.')
+            return data
+        else :
+            # returning empty string if no data is available
+            # print(f'[!] No saved data available for {name}')
+            # print('[*] Save passwords before fetching them.')
+
+            logger.warning(f'[!] No saved data available for {name}')
+            return dict()
+    except sqlite3.OperationalError:
+         # returning empty string if no data is available
+        # print(f'[!] No saved data available for {name}')
+        # print('[*] Save information before fetching them.')
 
         logger.warning(f'[!] No saved data available for {name}')
         return dict()
