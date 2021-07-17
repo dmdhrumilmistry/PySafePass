@@ -4,7 +4,8 @@ from safepass.paths import log_file
 
 
 logging.basicConfig(handlers=[logging.FileHandler(filename=log_file, 
-                                                 encoding='utf-8', mode='a+')],
+                                                 encoding='utf-8',
+                                                 mode='a+')],
                     format="%(asctime)s %(name)s:%(levelname)s:%(message)s", 
                     datefmt="%F %A %T", 
                     level=logging.DEBUG)
