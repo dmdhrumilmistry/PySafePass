@@ -1,9 +1,7 @@
 import sqlite3
-import safepass.logger as logger
+import safepass.logger as logger 
 import sys
-
-PASSWORD_DB = 'passwords.db'
-USER_DB = 'users.db'
+from safepass.paths import PASSWORD_DB, USER_DB
 
 
 def add_user(usrname:str, password_hash:str)->bool:

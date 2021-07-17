@@ -1,7 +1,9 @@
-import logging
+import logging 
+import sys
+from safepass.paths import log_file
 
 
-logging.basicConfig(filename='SafePass.log', encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig(filename=log_file, encoding='utf-8', level=logging.DEBUG)
 
 
 def info(log:str):

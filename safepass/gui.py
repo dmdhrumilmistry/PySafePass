@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
 from safepass.user import User
+from safepass.paths import login_ui, create_acc_ui, pass_table_ui, save_info_ui
 
 
 user = 'AUTH_ME'
@@ -12,7 +13,7 @@ user = 'AUTH_ME'
 class Login(QDialog):
     def __init__(self):
         super(Login, self).__init__()
-        loadUi("safepass/UI/login.ui", self)
+        loadUi(login_ui, self)
         self.login_button.clicked.connect(self.login_user)
         self.createacc_button.clicked.connect(self.change_to_create_acc_dialog)
         self.password_input.setEchoMode(QLineEdit.Password)
@@ -43,7 +44,7 @@ class Login(QDialog):
 class CreateAcc(QDialog):
     def __init__(self):
         super(CreateAcc, self).__init__()
-        loadUi('safepass/UI/CreateAccount.ui', self)
+        loadUi(create_acc_ui, self)
         self.createacc_button.clicked.connect(self.create_new_acc)
         self.password_input.setEchoMode(QLineEdit.Password)
         self.conpassword_input.setEchoMode(QLineEdit.Password)
@@ -70,7 +71,7 @@ class CreateAcc(QDialog):
 class PasswordsTable(QDialog):
     def __init__(self):
         super(PasswordsTable, self).__init__()
-        loadUi('safepass/UI/PasswordsTable.ui', self)
+        loadUi(pass_table_ui, self)
         self.pass_table.setColumnWidth(0,112)
         self.pass_table.setColumnWidth(1,175)
         self.pass_table.setColumnWidth(2,152)
@@ -111,7 +112,7 @@ class PasswordsTable(QDialog):
 class SaveInformation(QDialog):
     def __init__(self):
         super(SaveInformation, self).__init__()
-        loadUi('safepass/UI/SaveInfo.ui',self)
+        loadUi(save_info_ui, self)
 
         self.genpass_button.clicked.connect(self.genpass)
         self.saveinfo_button.clicked.connect(self.saveinfo)
