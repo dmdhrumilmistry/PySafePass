@@ -1,17 +1,8 @@
-# SafePass
+# ***SafePass*** - An Open Source Password Manager
 
-```
-=================================================
-      __        __        ___              
-     / _\ __ _ / _| ___  / _ \__ _ ___ ___ 
-     \ \ / _` | |_ / _ \/ /_)/ _` / __/ __|
-     _\ \ (_| |  _|  __/ ___/ (_| \__ \__ \
-     \__/\__,_|_|  \___\/    \__,_|___/___/
-     ~ ~ An Open Source Password Manager ~ ~
-================================================= 
-```
+![SafePass Icon](https://github.com/dmdhrumilmistry/SafePass/blob/main/.images/safepass.png)
 
-SafePass is an Open Source Password Manager which stores usernames, passwords and websites with multiple user option. User can create multiple users and store their information securely from other SafePass users. Users can save and fetch passwords along with other operations using SafePass Terminal. SafePass also provides user to generate random passwords.
+**SafePass** is an Open Source Password Manager which stores usernames, passwords and websites with multiple user option. User can create multiple users and store their information securely from other SafePass users. Users can save and fetch passwords along with other operations using SafePass Terminal. SafePass also provides user to generate random passwords.
 
 ## About SafePass
 
