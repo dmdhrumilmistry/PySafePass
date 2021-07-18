@@ -85,7 +85,18 @@ SafePass was previously written in JAVA as random password generator, SafePass i
   ```
   python -m safepass
   ```
+## Run Safepass as background process
 
+- For windows
+  ```
+  start /b python -m safepass
+  ```
+  
+- For unix
+  ```
+  python -m safepass &
+  ```
+  
 ## Important Note for Ubuntu Users
 
 Safepass might get aborted abnormally, due to Qt unable to load xcb plugin. You can fix this using following command
