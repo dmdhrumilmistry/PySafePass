@@ -26,6 +26,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+releases
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -165,3 +166,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,windows
+
+# SafePass logs
+safepass/logs/SafePass.log

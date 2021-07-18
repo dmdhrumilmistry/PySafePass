@@ -1,25 +1,17 @@
 from os import name
 from os.path import join
-import sys
 
 
-log_file = ''
-PASSWORD_DB = ''
-USER_DB = ''
-login_ui = ''
-create_acc_ui = ''
-pass_table_ui = ''
-save_info_ui = ''
-icon = ''
+# implement suggestion by https://github.com/timotheyca
+root = __file__, '..'
 
-paths = sys.path
-for path in paths:
-    if 'site-packages' in path:
-        log_file = join(path,'safepass','logs','SafePass.log')
-        PASSWORD_DB = join(path,'safepass','db','passwords.db')
-        USER_DB = join(path,'safepass','db','users.db')
-        login_ui = join(path,'safepass','UI','login.ui')
-        create_acc_ui = join(path,'safepass','UI','CreateAccount.ui')
-        pass_table_ui = join(path,'safepass','UI','PasswordsTable.ui')
-        save_info_ui = join(path,'safepass','UI','SaveInfo.ui')
-        icon = join(path, 'safepass','images','safepass.png')
+PASSWORD_DB = join(*root,'db','passwords.db')
+USER_DB = join(*root,'db','users.db')
+
+log_file = join(*root,'logs','SafePass.log')
+
+icon = join(*root, '.images', 'safepass.png')
+login_ui = join(*root,'UI','login.ui')
+create_acc_ui = join(*root,'UI','CreateAccount.ui')
+pass_table_ui = join(*root,'UI','PasswordsTable.ui')
+save_info_ui = join(*root,'UI','SaveInfo.ui')
