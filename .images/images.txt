@@ -1,0 +1,1 @@
+.images folder consists of different images including Safepass icon.
