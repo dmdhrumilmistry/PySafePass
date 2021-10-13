@@ -74,18 +74,18 @@ SafePass was previously written in JAVA as random password generator, SafePass i
   
 - Run the safepass from console
   ```
-  python -m safepass
+  python -m pysafepass
   ```
 ## Run Safepass as background process
 
 - For windows
   ```
-  start /b python -m safepass
+  start /b python -m pysafepass
   ```
   
 - For unix
   ```
-  python -m safepass &
+  python -m pysafepass &
   ```
   
 ## Important Note for Ubuntu Users
