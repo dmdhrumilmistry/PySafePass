@@ -1,5 +1,5 @@
 import logging 
-from .paths import log_file
+from pysafepass.paths import log_file
 
 
 logging.basicConfig(handlers=[logging.FileHandler(filename=log_file, 

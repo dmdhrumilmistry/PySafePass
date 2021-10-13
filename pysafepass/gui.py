@@ -4,8 +4,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QIcon
-from .user import User
-from .paths import login_ui, create_acc_ui, pass_table_ui, save_info_ui, icon
+from pysafepass.user import User
+from pysafepass.paths import login_ui, create_acc_ui, pass_table_ui, save_info_ui, icon
 
 user = 'AUTH_ME'
 
