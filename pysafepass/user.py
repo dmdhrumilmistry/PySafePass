@@ -1,7 +1,7 @@
-import safepass.logger as logger
-import safepass.encrypt as encrypt 
-import safepass.db as db
-import safepass.hash as hash 
+from . import logger 
+from . import encrypt
+from . import db
+from . import hash
 
 
 class User:
