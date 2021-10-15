@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name = 'PySafePass',
-    version = '1.0.3',
+    version = '1.0.4',
     license='MIT License',
     description = 'SafePass is an Open Source Password Manager. SafePass is released as PySafePass on PyPi.',
     long_description=long_description,

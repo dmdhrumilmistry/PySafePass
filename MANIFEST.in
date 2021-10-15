@@ -1,6 +1,5 @@
-include safepass/UI/*
-include safepass/db/*
-include safepass/logs/*
-include safepass/.images/*
+include pysafepass/UI/*
+include pysafepass/db/*
+include pysafepass/.images/*
 include LICENSE.md
 include README.md

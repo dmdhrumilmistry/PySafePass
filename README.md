@@ -1,6 +1,5 @@
 # ***PySafePass*** - An Open Source Password Manager
 
-<!-- ![SafePass Icon](https://github.com/dmdhrumilmistry/SafePass/blob/main/safepass/.images/safepass.png?raw=True) -->
 
 **PySafePass** is an Open Source Password Manager which stores usernames, passwords and websites with multiple user option. User can create multiple users and store their information securely from other SafePass users. Users can save and fetch passwords along with other operations using SafePass Terminal. SafePass also provides user to generate random passwords.
 
@@ -20,7 +19,7 @@ PySafePass was previously written in JAVA (Safepass) as random password generato
 
 ### Using PyPi
 
-> safepass is released as [**pysafepass**](https://pypi.org/project/PySafePass/1.0.2/) on PyPi 
+> PySafePass is released as [**pysafepass**](https://pypi.org/project/PySafePass/) on PyPi 
 - Using pip
   ```
   pip install pysafepass
@@ -104,7 +103,7 @@ sudo apt-get install --reinstall libxcb-xinerama0
 - Create an issue
 - Fork this repo, add new feature and create Pull Request. 
 
-## ToDo
+## ToDos
 - generate logs
 - Option to create and load backups
 
