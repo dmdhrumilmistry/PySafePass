@@ -1,16 +1,16 @@
-# ***SafePass*** - An Open Source Password Manager
+# ***PySafePass*** - An Open Source Password Manager
 
-![SafePass Icon](https://github.com/dmdhrumilmistry/SafePass/blob/main/safepass/.images/safepass.png?raw=True)
+<!-- ![SafePass Icon](https://github.com/dmdhrumilmistry/SafePass/blob/main/safepass/.images/safepass.png?raw=True) -->
 
-**SafePass** is an Open Source Password Manager which stores usernames, passwords and websites with multiple user option. User can create multiple users and store their information securely from other SafePass users. Users can save and fetch passwords along with other operations using SafePass Terminal. SafePass also provides user to generate random passwords.
+**PySafePass** is an Open Source Password Manager which stores usernames, passwords and websites with multiple user option. User can create multiple users and store their information securely from other SafePass users. Users can save and fetch passwords along with other operations using SafePass Terminal. SafePass also provides user to generate random passwords.
 
-## About SafePass
+## About PySafePass
 
-SafePass was previously written in JAVA as random password generator, SafePass is now ported to python3 providing new features like multiple users funnctionality, options to generate, save and fetch passwords from the user stored database. 
+PySafePass was previously written in JAVA (Safepass) as random password generator, PySafePass is now ported to python3 providing new features like multiple users funnctionality, options to generate, save and fetch passwords from the user stored database. 
 
 
 ## Dependencies
-`SafePass` requires following programs/libraries/modules to run properly:
+`PySafePass` requires following programs/libraries/modules to run properly:
   - `Python`
     - `PyQt5`
     - `cryptography`
@@ -28,7 +28,7 @@ SafePass was previously written in JAVA as random password generator, SafePass i
 
 - Run the safepass from console
   ```
-  python -m safepass
+  python -m pysafepass
   ```
   
 
@@ -59,12 +59,12 @@ SafePass was previously written in JAVA as random password generator, SafePass i
 
 - Clone the SafePass repository 
   ```
-  git clone https://github.com/dmdhrumilmistry/safepass
+  git clone https://github.com/dmdhrumilmistry/PySafePass.git
   ```
   
 - Change directory to safepass
   ```
-  cd safepass
+  cd PySafePass
   ```
   
 - Install safepass
@@ -104,5 +104,8 @@ sudo apt-get install --reinstall libxcb-xinerama0
 - Create an issue
 - Fork this repo, add new feature and create Pull Request. 
 
+## ToDo
+- generate logs
+- Option to create and load backups
 
-## Star⭐ SafePass repository
+## Star⭐ PySafePass repository
