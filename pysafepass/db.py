@@ -1,6 +1,5 @@
 import sqlite3
 import sys
-from pysafepass import logger
 from pysafepass.paths import PASSWORD_DB, USER_DB
 
 
@@ -15,10 +14,10 @@ def add_user(usrname:str, password_hash:str)->bool:
         pass_cur.execute("INSERT INTO password_hashes VALUES (?,?)",(usrname, password_hash))
         pass_con.commit()
         pass_con.close()
-        logger.info(f'[*] Successfully added password hash to db of user {usrname}')
+        # print(f'[*] Successfully added password hash to db of user {usrname}')
         return True
     except Exception as e:
-        logger.error('[-] Exception : ', e) 
+        # print('[-] Exception : ', e) 
         return False
 
 
@@ -37,18 +36,20 @@ def get_pass_hash(usrname:str)->str:
 
         if passwd_hash is not None:
             # if row is not none then acc is found and fetched the password hash
-            logger.info('[*] Password hash fetched successfully from password db for user ' + usrname)
+            # print('[*] Password hash fetched successfully from password db for user ' + usrname)
             return passwd_hash[0]
         else :
             # return empty string if acc not found
-            logger.error('[!] No Account Found.')
+            # print('[!] No Account Found.')
             # print('[!] No Account Found.')
             return ''
     except sqlite3.OperationalError as e:
         # print('[!] Trying to fetch without creating user.')
-        logger.warning('[!] Trying to fetch without creating user.')
+        # print('[!] Trying to fetch without creating user.')
+        pass
     except Exception as e:
-        logger.error('[-] Exception : ', e) 
+        # print('[-] Exception : ', e) 
+        pass
 
 
 def get_saved_users():
@@ -70,7 +71,7 @@ def get_saved_users():
     except Exception as e:
         # print('[!] Try creating user before logging in.')
         # print(f'[-] Exception in get_save_users: {e}')
-        logger.error(f'[-] Exception in get_save_users: {e}. Exiting program')
+        # print(f'[-] Exception in get_save_users: {e}. Exiting program')
         # print('[-] Closing SafePass')
         sys.exit()
 
@@ -81,7 +82,7 @@ def dump_user_data(data:dict, name:str)->bool:
     dumps user data to the database.
     takes encrypted data(dict) and name(str) 
     '''
-    logger.info('[*] Starting to dump user data into database.')
+    # print('[*] Starting to dump user data into database.')
     # extracting information from the data dictionary if data is encrypted:
     if data['encrypted']:
         usernames = data['usernames']
@@ -101,12 +102,12 @@ def dump_user_data(data:dict, name:str)->bool:
 
         user_con.commit()
         user_con.close()
-        logger.info(f'[*] {name} data successfully dumped to user database.')
+        # print(f'[*] {name} data successfully dumped to user database.')
         return True
         
     else:
         # print('[!] Encrypt data before saving.')
-        logger.warning('[!] Encrypt data before saving.')
+        # print('[!] Encrypt data before saving.')
 
         return False
 
@@ -154,12 +155,12 @@ def get_dumped_user_data(name:str)->dict:
             # print(f'[!] No saved data available for {name}')
             # print('[*] Save passwords before fetching them.')
 
-            logger.warning(f'[!] No saved data available for {name}')
+            # print(f'[!] No saved data available for {name}')
             return dict()
     except sqlite3.OperationalError:
          # returning empty string if no data is available
         # print(f'[!] No saved data available for {name}')
         # print('[*] Save information before fetching them.')
 
-        logger.warning(f'[!] No saved data available for {name}')
+        # print(f'[!] No saved data available for {name}')
         return dict()
