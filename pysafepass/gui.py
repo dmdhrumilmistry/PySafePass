@@ -126,7 +126,7 @@ class SaveInformation(QDialog):
             passlen = 12
 
         # generate random password
-        chars = string.ascii_letters + string.digits + '!@#$%^&*()_+-=/*,./;'
+        chars = string.ascii_letters + string.digits + '!@#$%^&*()_+-=/*,.;'
         random.seed = os.urandom(1024)
         for i in range(passlen):
             passwd = ''.join(random.choice(chars) for i in range(passlen))
