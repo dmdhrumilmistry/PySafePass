@@ -1,11 +1,11 @@
 from sys import exit, argv
-import random, os, string, pyperclip
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QIcon
 from pysafepass.user import User
 from pysafepass.paths import login_ui, create_acc_ui, pass_table_ui, save_info_ui, icon
+import random, os, string, pyperclip
 
 user = 'AUTH_ME'
 
@@ -170,6 +170,10 @@ def message_box(box_type='warning',title='Title',text='information box', info_te
     msg.exec_()
 
 
+def start_safepass_app():
+    exit(SafePassApp.exec_())
+
+
 SafePassApp = QApplication(argv)
 SafePassApp.setWindowIcon(QIcon(icon))
 SafePassLoginWindow = Login()
@@ -181,6 +185,3 @@ widget.setFixedWidth(480)
 widget.show()
 
 
-def start_safepass_app():
-    global SafePassApp
-    exit(SafePassApp.exec_())
